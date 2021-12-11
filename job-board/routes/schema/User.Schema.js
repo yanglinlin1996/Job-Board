@@ -2,12 +2,8 @@ const Schema = require("mongoose").Schema;
 
 exports.UserSchema = new Schema(
   {
-    username: {
-      type: String,
-    },
-    password: {
-      type: String,
-    },
+    username: String,
+    password: String,
     favorites: {
       type: Array,
     },

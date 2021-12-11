@@ -4,7 +4,7 @@ const JobSchema = require("../schema/Job.Schema").JobSchema;
 const JobModel = mongoose.model("Job", JobSchema);
 
 function insertJob(job) {
-  return JobModel.create(job);
+  return JobModel.insert(job);
 }
 
 function getAllJobs() {
@@ -72,6 +72,25 @@ function updateCompanyWebsiteById(id, companyWebsite) {
   ).exec();
 }
 
+function updateJobDetailsById(id, jobDetails) {
+  return JobModel.updateOne(
+    { id: id },
+    {
+      $set: {
+        title: jobDetails.title,
+        companyName: jobDetails.companyName,
+        location: jobDetails.location,
+        description: jobDetails.description,
+        employerEmailContact: jobDetails.employerEmailContact,
+        companyWebsite: jobDetails.companyWebsite
+          ? jobDetails.companyWebsite
+          : "",
+        postingDate: new Date(),
+      },
+    }
+  );
+}
+
 // Make sure to export a function after you create it!
 module.exports = {
   insertJob,
@@ -87,4 +106,5 @@ module.exports = {
   updateDescriptionById,
   updateEmployerEmailContactById,
   updateCompanyWebsiteById,
+  updateJobDetailsById,
 };
