@@ -12,8 +12,9 @@ exports.JobSchema = new Schema(
       type: String,
     },
     employerEmailContact: String,
-    companyWebsite: String,
+    companyWebsite: String, // optional
     // this explicitly declares what collection we're using
+    postingDate: Date,
   },
   { collection: "jobs" }
 );

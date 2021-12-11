@@ -16,35 +16,35 @@ const jobs = [
 ];
 
 // Returns all known Jobs
-router.get("/findAll", function (request, response) {
+router.get("/findAll", (request, response) => {
   return JobAccessor.getAllJobs()
     .then((pokemonResponse) => response.status(200).send(pokemonResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Job by id
-router.get("/myFavoriteJob", auth_middleware, function (request, response) {
+router.get("/jobSearch", auth_middleware, (request, response) => {
   return JobAccessor.findJobById(request.id)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Job by title
-router.get("/myFavoriteJob", auth_middleware, function (request, response) {
+router.get("/jobSearch", auth_middleware, (request, response) => {
   return JobAccessor.findJobByTitle(request.title)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Jobs by Company Name
-router.get("/myFavoriteJob", auth_middleware, function (request, response) {
+router.get("/jobSearch", auth_middleware, (request, response) => {
   return JobAccessor.findJobByCompanyName(request.companyName)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Jobs by Location
-router.get("/myFavoriteJob", auth_middleware, function (request, response) {
+router.get("/jobSearch", auth_middleware, (request, response) => {
   return JobAccessor.findJobByLocation(request.location)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
@@ -72,6 +72,7 @@ router.post("/create", auth_middleware, (request, response) => {
     description: job.description,
     employerEmailContact: job.employerEmailContact,
     companyWebsite: job.companyWebsite ? job.companyWebsite : "",
+    postingDate: new Date(),
   };
 
   JobAccessor.insertJob(newJob)
@@ -79,18 +80,34 @@ router.post("/create", auth_middleware, (request, response) => {
     .catch((error) => response.status(400).send(error));
 });
 
-// update the job title matching the job id
-router.put("/updateJobTitle/:jobId", auth_middleware, (request, response) => {
+// update the job matching the job id
+router.put("/updateJob/:jobId", auth_middleware, (request, response) => {
   const jobId = request.params.jobId;
-  const newJobTitle = request.body.title;
-  request.JobAccessor.updateJobTitleById(jobId, newJobTitle)
+  const job = request.body;
+
+  // Check if job existed matching the job id
+  if (!JobAccessor.findJobById(jobId)) {
+    return response.status(404).send("Job post not found.");
+  }
+
+  if (
+    !job.title ||
+    !job.companyName ||
+    !job.location ||
+    !job.description ||
+    !job.employerEmailContact
+  ) {
+    return response.status(422).send("Missing data");
+  }
+
+  request.JobAccessor.updateJobTitleById(jobId, job)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return about information of Job Board
-router.get("/about", function (req, res) {
-  res.send("This is an online job board posting.");
+router.get("/about", (request, response) => {
+  response.send("This is an online job board posting.");
 });
 
 module.exports = router;
