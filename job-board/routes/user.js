@@ -5,7 +5,7 @@ const UserModel = require("./models/User.Model");
 // const jwt = require("jsonwebtoken");
 const auth_middleware = require("./auth_middleware.js");
 
-// Returns all known pokemon
+// Returns all known users
 router.get("/findAll", function (request, response) {
   UserModel.getAllUsers()
     .then((userResponse) => {
@@ -26,6 +26,7 @@ router.get("/whoIsLoggedInButWithoutMiddleware", function (request, response) {
   return response.send(username);
 });
 
+// Return user with requested username
 router.get("/:username", (request, response) => {
   const username = request.params.username;
   if (!username) {
@@ -66,6 +67,7 @@ router.post("/authenticate", function (request, response) {
     .catch((error) => console.error(`Something went wrong: ${error}`));
 });
 
+// Update user info with given username and password
 router.post("/", function (req, res) {
   const { username, password } = req.body;
   console.log(req.body);
@@ -84,6 +86,7 @@ router.post("/", function (req, res) {
     .catch((error) => res.status(422).send(error));
 });
 
+// Log user out
 router.post("/logout", function (req, res) {
   req.session.destroy();
   return res.send("Ok");

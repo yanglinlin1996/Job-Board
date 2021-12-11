@@ -33,6 +33,45 @@ function deleteJobById(id) {
   return JobModel.deleteOne({ id: id }).exec();
 }
 
+function updateJobTitleById(id, title) {
+  return JobModel.updateOne({ id: id }, { $set: { title: title } }).exec();
+}
+
+function updateJobLocationById(id, location) {
+  return JobModel.updateOne(
+    { id: id },
+    { $set: { location: location } }
+  ).exec();
+}
+
+function updateCompanyNameById(id, companyName) {
+  return JobModel.updateOne(
+    { id: id },
+    { $set: { companyName: companyName } }
+  ).exec();
+}
+
+function updateDescriptionById(id, description) {
+  return JobModel.updateOne(
+    { id: id },
+    { $set: { description: description } }
+  ).exec();
+}
+
+function updateEmployerEmailContactById(id, employerEmailContact) {
+  return JobModel.updateOne(
+    { id: id },
+    { $set: { employerEmailContact: employerEmailContact } }
+  ).exec();
+}
+
+function updateCompanyWebsiteById(id, companyWebsite) {
+  return JobModel.updateOne(
+    { id: id },
+    { $set: { companyWebsite: companyWebsite } }
+  ).exec();
+}
+
 // Make sure to export a function after you create it!
 module.exports = {
   insertJob,
@@ -42,4 +81,10 @@ module.exports = {
   findJobByCompanyName,
   findJobByLocation,
   deleteJobById,
+  updateJobTitleById,
+  updateJobLocationById,
+  updateCompanyNameById,
+  updateDescriptionById,
+  updateEmployerEmailContactById,
+  updateCompanyWebsiteById,
 };
