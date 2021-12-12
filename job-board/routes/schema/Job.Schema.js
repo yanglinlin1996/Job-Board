@@ -2,7 +2,7 @@ const Schema = require("mongoose").Schema;
 
 exports.JobSchema = new Schema(
   {
-    id: Number,
+    id: String,
     title: String,
     companyName: String,
     location: {

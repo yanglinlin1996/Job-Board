@@ -23,35 +23,35 @@ router.get("/findAll", (request, response) => {
 });
 
 // Return Job by id
-router.get("/jobSearch", auth_middleware, (request, response) => {
+router.get("/jobSearch", (request, response) => {
   return JobAccessor.findJobById(request.id)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Job by title
-router.get("/jobSearch", auth_middleware, (request, response) => {
+router.get("/jobSearch", (request, response) => {
   return JobAccessor.findJobByTitle(request.title)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Jobs by Company Name
-router.get("/jobSearch", auth_middleware, (request, response) => {
+router.get("/jobSearch", (request, response) => {
   return JobAccessor.findJobByCompanyName(request.companyName)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Jobs by Location
-router.get("/jobSearch", auth_middleware, (request, response) => {
+router.get("/jobSearch", (request, response) => {
   return JobAccessor.findJobByLocation(request.location)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Create a job post
-router.post("/create", auth_middleware, (request, response) => {
+router.post("/create", (request, response) => {
   const job = request.body;
   if (
     !job.title ||
@@ -81,7 +81,7 @@ router.post("/create", auth_middleware, (request, response) => {
 });
 
 // update the job matching the job id
-router.put("/updateJob/:jobId", auth_middleware, (request, response) => {
+router.put("/updateJob/:jobId", (request, response) => {
   const jobId = request.params.jobId;
   const job = request.body;
 

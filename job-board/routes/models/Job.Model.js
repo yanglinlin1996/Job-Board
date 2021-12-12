@@ -4,7 +4,7 @@ const JobSchema = require("../schema/Job.Schema").JobSchema;
 const JobModel = mongoose.model("Job", JobSchema);
 
 function insertJob(job) {
-  return JobModel.insert(job);
+  return JobModel.create(job);
 }
 
 function getAllJobs() {

@@ -10,7 +10,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 //Setup MongoDB Connection
-const mongoString = "mongodb://127.0.0.1/job_board";
+const mongoString = "mongodb://127.0.0.1:27017";
 mongoose.connect(mongoString, { useNewUrlParser: true });
 
 const mongoDB = mongoose.connection;
@@ -23,12 +23,12 @@ mongoDB.on(
 const app = express();
 
 // app.use(session({secret: "SUPER_DUPER_SECRET"}));
-app.use(
-  session({
-    secret: "SUPER_DUPER_SECRET",
-    store: MongoStore.create({ mongoUrl: mongoString }),
-  })
-);
+// app.use(
+//   session({
+//     secret: "SUPER_DUPER_SECRET",
+//     store: MongoStore.create({ mongoUrl: mongoString }),
+//   })
+// );
 
 app.use(cors());
 
