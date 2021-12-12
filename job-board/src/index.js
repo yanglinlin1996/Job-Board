@@ -13,7 +13,19 @@ element of the HTML document (this is actually using the DOM API to find this el
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.jsx';
+import Home from './components/Home';
+import LoginForm from './components/LoginForm';
+import SignUpForm from './components/SignUpForm';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Router>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/signUp" element={<SignUpForm />} />
+        </Routes>
+    </Router>,
+    document.getElementById('root')
+);
