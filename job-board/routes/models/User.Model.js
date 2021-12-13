@@ -12,7 +12,7 @@ function getAllUsers() {
 }
 
 function findUserByUsername(username) {
-  return UserModel.findOne({ username }).exec();
+  return UserModel.find({ username: username }).exec();
 }
 
 function updatePasswordByUsername(username, password) {
@@ -22,16 +22,16 @@ function updatePasswordByUsername(username, password) {
   ).exec();
 }
 
-function updateFavoritesById(id, jobId) {
+function updateFavoritesById(username, jobId) {
   return UserModel.updateOne(
-    { id: id },
+    { username: username },
     { $push: { favorites: { jobId: jobId } } }
   ).exec();
 }
 
-function deleteJobFromFavoritesById(id, jobId) {
-  return UserModel.deleteOne(
-    { id: id },
+function deleteJobFromFavoritesById(username, jobId) {
+  return UserModel.updateOne(
+    { username: username },
     { $pull: { favorites: { jobId: jobId } } }
   );
 }

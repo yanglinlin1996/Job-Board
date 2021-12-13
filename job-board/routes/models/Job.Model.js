@@ -12,7 +12,7 @@ function getAllJobs() {
 }
 
 function findJobById(id) {
-  return JobModel.findById(id).exec();
+  return JobModel.find({ id: id }).exec();
 }
 
 function findJobByTitle(title) {
@@ -27,6 +27,16 @@ function findJobByCompanyName(companyName) {
 
 function findJobByLocation(location) {
   return JobModel.find({ location: location }).exec();
+}
+
+function findJobByJobDetails(jobDetails) {
+  return JobModel.find({
+    title: jobDetails.title,
+    companyName: jobDetails.companyName,
+    location: jobDetails.location,
+    description: jobDetails.description,
+    employerEmailContact: jobDetails.employerEmailContact,
+  }).exec();
 }
 
 function deleteJobById(id) {
@@ -107,4 +117,5 @@ module.exports = {
   updateEmployerEmailContactById,
   updateCompanyWebsiteById,
   updateJobDetailsById,
+  findJobByJobDetails,
 };

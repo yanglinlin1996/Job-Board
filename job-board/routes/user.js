@@ -29,7 +29,7 @@ router.get("/findAll", (request, response) => {
 // });
 
 // Return user with requested username
-router.get("/:username", (request, response) => {
+router.get("/getUser/:username", (request, response) => {
   const username = request.params.username;
   if (!username) {
     return response.status(422).send("Missing data");
@@ -37,7 +37,7 @@ router.get("/:username", (request, response) => {
 
   return UserModel.findUserByUsername(username)
     .then((userResponse) => {
-      if (!userResponse) {
+      if (!userResponse.length) {
         response.status(404).send("User not found");
       }
       response.send(userResponse);
@@ -48,21 +48,21 @@ router.get("/:username", (request, response) => {
 // User login
 router.post("/authenticate", (request, response) => {
   let { username, password } = request.body;
-  password = JSON.stringify(password);
+  //password = JSON.stringify(password);
   if (!username || !password) {
     return response.status(422).send("Must include both password and username");
   }
 
   return UserModel.findUserByUsername(username)
     .then((userResponse) => {
-      if (!userResponse) {
+      if (!userResponse.length) {
         return response.status(404).send("No user found with that username");
       }
-      if (userResponse.password === password) {
-        request.session.username = username;
+      if (userResponse[0].password === password) {
+        //request.session.username = username;
         return response.status(200).send({ username });
       } else {
-        return response.status(404).send("Invalid password!");
+        return response.status(404).send("Invalid password.");
       }
     })
     .catch((error) => console.error(`Something went wrong: ${error}`));
@@ -88,22 +88,83 @@ router.post("/register", (req, res) => {
   }
 
   // Return error if user registers an existing username
-  if (UserModel.findUserByUsername(username)) {
-    return res
-      .status(403)
-      .send("Error! You registered an existing username. Please try again!");
-  }
-
-  return UserModel.insertUser({
-    username: username,
-    password: password,
-    favorites: [],
-  })
+  UserModel.findUserByUsername(username)
     .then((userResponse) => {
-      req.session.username = username;
-      return res.status(200).send("Welcome! You registered successfully.");
+      if (userResponse.length) {
+        res
+          .status(403)
+          .send(
+            "Error! You registered an existing username. Please try again!"
+          );
+      } else {
+        insertNewUser(username, password);
+      }
     })
-    .catch((error) => res.status(422).send(error));
+    .catch((error) => res.send(error));
+
+  function insertNewUser(username, password) {
+    UserModel.insertUser({
+      username: username,
+      password: password,
+      favorites: [],
+    })
+      .then((userResponse) => {
+        req.username = username;
+        return res.status(200).send("Welcome! You registered successfully.");
+      })
+      .catch((error) => res.status(422).send(error));
+  }
+});
+
+// Add job to user's favorites list
+router.put("/addFavoriteJob", (request, response) => {
+  const username = request.query.username;
+  const jobId = request.query.id;
+  // Check if job already in favorite list
+  UserModel.findUserByUsername(username)
+    .then((userResponse) => {
+      const favorites = userResponse[0].favorites;
+      if (favorites.find((job) => job.jobId === jobId)) {
+        return response.status(404).send("Job already in your favorite list.");
+      } else {
+        return UserModel.updateFavoritesById(username, jobId)
+          .then((userResponse) =>
+            response
+              .status(200)
+              .send("Job added to Favorites list successfully!")
+          )
+          .catch((error) =>
+            request.status(404).send("Fail to add job to favorites list.")
+          );
+      }
+    })
+    .catch((error) => console.error(`Something went wrong: ${error}`));
+});
+
+// Remove job from user job favorite list
+router.delete("/deleteFavoriteJob", (request, response) => {
+  const username = request.query.username;
+  const jobId = request.query.id;
+  UserModel.findUserByUsername(username)
+    .then((userResponse) => {
+      const favorites = userResponse[0].favorites;
+      if (!favorites.find((job) => job.jobId === jobId)) {
+        return response
+          .status(404)
+          .send("The job is not found in the favorite list.");
+      } else {
+        return UserModel.deleteJobFromFavoritesById(username, jobId)
+          .then((userResponse) =>
+            response
+              .status(200)
+              .send("Job removed from Favorites list successfully!")
+          )
+          .catch((error) =>
+            request.status(404).send("Fail to remove job from favorites list.")
+          );
+      }
+    })
+    .catch((error) => console.error(`Something went wrong: ${error}`));
 });
 
 // Log user out
