@@ -1,18 +1,6 @@
-// import React from 'react';
-// import NavBar from './NavBar';
-
-// const SignUpForm = () => {
-//     return (
-//         <div>
-//             <NavBar />
-//             <div>Sign Up</div>
-//         </div>
-//     )
-// }
-
-// export default SignUpForm;
-
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -36,6 +24,13 @@ export default function SignUp() {
         password: data.get('password'),
         });
     };
+
+    const navigate = useNavigate();
+    const [userData, setUserData] = useState({
+        username: '',
+        password: '',
+        confirmPassword: '',
+    })
 
     return (
         <ThemeProvider theme={theme}>
@@ -63,6 +58,14 @@ export default function SignUp() {
                                         label="Username"
                                         name="username"
                                         autoComplete="username"
+                                        value={userData.username} 
+                                        onChange={(e) => {
+                                            const username = e.target.value;
+                                            setUserData({
+                                                ...userData,
+                                                username: username
+                                            })
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -74,6 +77,14 @@ export default function SignUp() {
                                         type="password"
                                         id="password"
                                         autoComplete="new-password"
+                                        value={userData.password} 
+                                        onChange={(e) => {
+                                            const password = e.target.value;
+                                            setUserData({
+                                                ...userData,
+                                                password: password
+                                            })
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -85,6 +96,14 @@ export default function SignUp() {
                                         type="password"
                                         id="password"
                                         autoComplete="new-password"
+                                        value={userData.confirmPassword} 
+                                        onChange={(e) => {
+                                            const confirmPassword = e.target.value;
+                                            setUserData({
+                                                ...userData,
+                                                confirmPassword: confirmPassword
+                                            })
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -93,7 +112,9 @@ export default function SignUp() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                            >
+                                onClick = {() => {
+                                    axios.post('/api/user/register', userData).then(response => { navigate("/authenticate")
+                                    console.log(response)}).catch(error => console.log(error));}}>
                                 Sign Up
                             </Button>
                             <Grid container justifyContent="flex-end">

@@ -69,11 +69,11 @@ router.post("/authenticate", (request, response) => {
 });
 
 // Create user file with requested username, password and password verification
-router.post("/register", (req, res) => {
-  const { username, password, confirmedPassword } = req.body;
+router.post("/register", (request, response) => {
+  const { username, password, confirmedPassword } = request.body;
   // Return error if missing data
   if (!username || !password || !confirmedPassword) {
-    return res
+    return response
       .status(422)
       .send(
         "Missing username: " + username + ", password or password verification."
@@ -82,7 +82,7 @@ router.post("/register", (req, res) => {
 
   // Return error if password or password verification don't match
   if (password !== confirmedPassword) {
-    return res
+    return response
       .status(401)
       .send("Password verification does not match password.");
   }
@@ -91,7 +91,7 @@ router.post("/register", (req, res) => {
   UserModel.findUserByUsername(username)
     .then((userResponse) => {
       if (userResponse.length) {
-        res
+        response
           .status(403)
           .send(
             "Error! You registered an existing username. Please try again!"
@@ -100,7 +100,7 @@ router.post("/register", (req, res) => {
         insertNewUser(username, password);
       }
     })
-    .catch((error) => res.send(error));
+    .catch((error) => response.send(error));
 
   function insertNewUser(username, password) {
     UserModel.insertUser({
@@ -109,10 +109,12 @@ router.post("/register", (req, res) => {
       favorites: [],
     })
       .then((userResponse) => {
-        req.username = username;
-        return res.status(200).send("Welcome! You registered successfully.");
+        request.username = username;
+        return response
+          .status(200)
+          .send("Welcome! You registered successfully.");
       })
-      .catch((error) => res.status(422).send(error));
+      .catch((error) => response.status(422).send(error));
   }
 });
 
