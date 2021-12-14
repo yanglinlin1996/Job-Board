@@ -12,7 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-export default function LoginForm() {
+export default function LoginForm(props) {
+    const { handleLoggedIn } = props;
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -25,14 +26,19 @@ export default function LoginForm() {
         const opt = {
             method: "POST",
             url: "/api/user/authenticate",
-            data: userData
+            data: userData,
+            headers: { "content-type": "application/json" }
         };
 
-        axios(opt).then(response => { 
-            console.log("login response is: ", response);
-            navigate('/');
-        })
-            .catch(error => console.log(error));
+        axios(opt)
+            .then(response => { 
+                if (response.status === 200) {
+                    console.log("login response is: ", response);
+                    handleLoggedIn(response.data);
+                    navigate('/');
+                }
+            })
+            .catch(error => console.log("Login failed: ", error.message));
     };
 
     return (

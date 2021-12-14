@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import NavBar from './NavBar';
 import { useParams } from 'react-router';
 
 
@@ -40,10 +39,7 @@ const JobDetails = () => {
         (<div> No Job Found </div>);
 
     return (
-        <div>
-            <NavBar />
-            <div>{jobComponent}</div>
-        </div>
+        {jobComponent}
     )
 }
 

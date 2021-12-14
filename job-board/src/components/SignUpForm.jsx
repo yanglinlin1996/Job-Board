@@ -27,7 +27,8 @@ export default function SignUp() {
         const opt = {
             method: "POST",
             url: "/api/user/register",
-            data: userData
+            data: userData,
+            headers: { "content-type": "application/json" }
         };
 
         axios(opt).then(response => { 

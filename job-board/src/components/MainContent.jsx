@@ -4,15 +4,17 @@ import LoginForm from './LoginForm';
 import SignUp from './SignUpForm';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-const MainContent = () => {
+const MainContent = (props) => {
+    const { isLoggedIn, handleLoggedIn } = props;
 
     return (
         <div className='mainContent'>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/" element={<Home isLoggedIn={ isLoggedIn } />} />
+                    <Route path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
                     <Route path="/signUp" element={<SignUp />} />
+                    <Route path="/logout" element={<Home isLoggedIn={ isLoggedIn } />} />
                 </Routes>
             </Router>
             

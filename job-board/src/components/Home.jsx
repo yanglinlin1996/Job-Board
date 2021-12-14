@@ -5,7 +5,8 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import SearchResults from './SearchResults';
 
-const Home = () => {
+const Home = (props) => {
+    const { isLoggedIn } = props;
     const [formInput, setFormInput] = useState('');
     //const [job, setJob] = useState({title: ""});
     const [errorMessage, setErrorMessage] = useState(null);
