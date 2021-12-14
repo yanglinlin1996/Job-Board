@@ -3,7 +3,6 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import NavBar from './NavBar';
 import SearchResults from './SearchResults';
 
 const Home = () => {
@@ -21,7 +20,6 @@ const Home = () => {
     }
     return (
         <div>
-            <NavBar />
             <div className='titleContainer'>
                 Welcome To Job Search Board
             </div>

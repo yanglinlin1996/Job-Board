@@ -61,8 +61,7 @@ router.post("/authenticate", (request, response) => {
       }
       if (userResponse[0].password === password) {
         request.session.username = username;
-        const msg = username + " is logged in!!";
-        return response.status(200).send(msg);
+        return response.status(200).send(username);
       } else {
         return response.status(404).send("Invalid password.");
       }
