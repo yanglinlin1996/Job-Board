@@ -11,6 +11,10 @@ function getAllJobs() {
   return JobModel.find().exec();
 }
 
+function getJobsByUser(creator) {
+  return JobModel.find({ creator: creator }).exec();
+}
+
 function findJobById(id) {
   return JobModel.find({ id: id }).exec();
 }
@@ -105,6 +109,7 @@ function updateJobDetailsById(id, jobDetails) {
 module.exports = {
   insertJob,
   getAllJobs,
+  getJobsByUser,
   findJobById,
   findJobByTitle,
   findJobByCompanyName,

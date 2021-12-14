@@ -51,7 +51,7 @@ router.get("/jobSearchByLoc", (request, response) => {
 });
 
 // Create a job post
-router.post("/create", (request, response) => {
+router.post("/create", auth_middleware, (request, response) => {
   const job = request.body;
   if (
     !job.title ||
@@ -62,6 +62,8 @@ router.post("/create", (request, response) => {
   ) {
     return response.status(422).send("Missing data");
   }
+
+  job.creator = request.username;
 
   // Check if the new job post content already exists
   //   if (!JobAccessor.findJobByJobDetails(job)) {
@@ -89,6 +91,7 @@ router.post("/create", (request, response) => {
       description: job.description,
       employerEmailContact: job.employerEmailContact,
       companyWebsite: job.companyWebsite ? job.companyWebsite : "",
+      creator: job.creator,
       postingDate: new Date(),
     };
 
@@ -98,8 +101,15 @@ router.post("/create", (request, response) => {
   }
 });
 
+router.get("/getJobsByUser", auth_middleware, (request, response) => {
+  const creator = request.username;
+  JobAccessor.getJobsByUser(creator)
+    .then((jobsResponse) => response.status(200).send(jobsResponse))
+    .catch((error) => response.status(400).send(error));
+})
+
 // update the job matching the job id
-router.put("/updateJob", (request, response) => {
+router.put("/updateJob", auth_middleware, (request, response) => {
   const id = request.query.id;
   const job = request.body;
 
@@ -132,7 +142,7 @@ router.put("/updateJob", (request, response) => {
 });
 
 // Delete job with the job id
-router.delete("/delete", (request, response) => {
+router.delete("/delete", auth_middleware, (request, response) => {
   const id = request.query.id;
 
   // Check if job existed matching the job id

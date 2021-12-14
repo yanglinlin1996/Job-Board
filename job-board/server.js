@@ -23,12 +23,12 @@ mongoDB.on(
 const app = express();
 
 // app.use(session({secret: "SUPER_DUPER_SECRET"}));
-// app.use(
-//   session({
-//     secret: "SUPER_DUPER_SECRET",
-//     store: MongoStore.create({ mongoUrl: mongoString }),
-//   })
-// );
+app.use(
+  session({
+    secret: "SUPER_DUPER_SECRET",
+    store: MongoStore.create({ mongoUrl: mongoString }),
+  })
+);
 
 app.use(cors());
 
@@ -48,7 +48,6 @@ app.use(express.static(path.join(__dirname, "build")));
 
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
-  // res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // app.listen(process.env.PORT || 8000, () => {
