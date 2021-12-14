@@ -18,14 +18,28 @@ export default function SignUp() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const opt = {
+            method: "POST",
+            url: "/api/user/register",
+            data: userData
+        };
+        console.log("Printing data: " + data);
+        // const userData = {
+        //     username: data.get('username'),
+        //     password: data.get('password'),
+        //     confirmPassword: data.get('confirmPassword')
+        // };
+        axios(opt).then(response => { navigate('/login')
+            console.log(userData)}).catch(error => console.log(error));
         // eslint-disable-next-line no-console
         console.log({
-        email: data.get('email'),
+        username: data.get('username'),
         password: data.get('password'),
+        confirmPassword: data.get('confirmPassword')
         });
     };
 
-    const navigate = useNavigate();
+    let navigate = useNavigate();
     const [userData, setUserData] = useState({
         username: '',
         password: '',
@@ -91,7 +105,7 @@ export default function SignUp() {
                                     <TextField
                                         required
                                         fullWidth
-                                        name="password"
+                                        name="confirmPassword"
                                         label="Confirm Password"
                                         type="password"
                                         id="password"
@@ -112,9 +126,10 @@ export default function SignUp() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                onClick = {() => {
-                                    axios.post('/api/user/register', userData).then(response => { navigate("/authenticate")
-                                    console.log(response)}).catch(error => console.log(error));}}>
+                                // onClick = {() => {
+                                //     axios.post('/api/user/register', userData).then(response => { navigate('/login')
+                                //     console.log(userData)}).catch(error => console.log(error));}}
+                                >
                                 Sign Up
                             </Button>
                             <Grid container justifyContent="flex-end">
