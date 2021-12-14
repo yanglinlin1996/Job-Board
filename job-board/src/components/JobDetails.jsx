@@ -8,7 +8,7 @@ const JobDetails = () => {
     const jobId = useParams().jobId;
 
     const findJobDetails = () => {
-        axios.get('http://localhost:8000/api/job/jobSearch?id=' + jobId).then((response) => setJob(response[0])).catch((error) => console.log("Could not find Job."))
+        axios.get('/api/job/jobSearch?id=' + jobId).then((response) => setJob(response[0])).catch((error) => console.log("Could not find Job."))
     }
 
     const [job, setJob] = useState(null);

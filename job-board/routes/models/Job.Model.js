@@ -20,17 +20,22 @@ function findJobById(id) {
 }
 
 function findJobByTitle(title) {
-  return JobModel.find({
-    title: title,
-  }).exec();
+  return JobModel.find({ title: { $regex: title, $options: "i" } }).exec();
+  //   return JobModel.find({
+  //     title: title,
+  //   }).exec();
 }
 
 function findJobByCompanyName(companyName) {
-  return JobModel.find({ companyName: companyName }).exec();
+  return JobModel.find({
+    companyName: { $regex: companyName, $options: "i" },
+  }).exec();
 }
 
 function findJobByLocation(location) {
-  return JobModel.find({ location: location }).exec();
+  return JobModel.find({
+    location: { $regex: location, $options: "i" },
+  }).exec();
 }
 
 function findJobByJobDetails(jobDetails) {

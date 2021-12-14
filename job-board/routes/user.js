@@ -131,13 +131,13 @@ router.put("/addFavoriteJob", auth_middleware, (request, response) => {
       if (favorites.find((job) => job.jobId === jobId)) {
         UserModel.deleteJobFromFavoritesById(username, jobId)
           .then((userResponse) =>
-              response
-                .status(200)
-                .send("Job removed from favorites list successfully!")
-            )
-            .catch((error) =>
-              request.status(404).send("Fail to remove job favorites list.")
-            );
+            response
+              .status(200)
+              .send("Job removed from favorites list successfully!")
+          )
+          .catch((error) =>
+            request.status(404).send("Fail to remove job favorites list.")
+          );
       } else {
         return UserModel.updateFavoritesById(username, jobId)
           .then((userResponse) =>
