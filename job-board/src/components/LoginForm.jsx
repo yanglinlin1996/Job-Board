@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -12,14 +14,26 @@ import NavBar from './NavBar';
 const theme = createTheme();
 
 export default function LoginForm() {
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
+        const userData = {
+            username: data.get('username'),
             password: data.get('password'),
-        });
+        };
+        const opt = {
+            method: "POST",
+            url: "/api/user/authenticate",
+            data: userData
+        };
+
+        axios(opt).then(response => { 
+            console.log("login response is: ", response);
+            navigate('/');
+        })
+            .catch(error => console.log(error));
     };
 
     return (
@@ -43,10 +57,10 @@ export default function LoginForm() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
                         />
                         <TextField
