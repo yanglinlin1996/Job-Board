@@ -120,6 +120,13 @@ router.post("/register", (request, response) => {
   }
 });
 
+router.get("/getFavoriteJobsByUser", auth_middleware, (request, response) => {
+  const username = request.username;
+  UserModel.findUserByUsername(username)
+    .then(userResponse => {response.status(200).send(userResponse)})
+    .catch(error => request.status(404).send("Fail to remove job favorites list."))
+})
+
 // Add job to user's favorites list
 router.put("/addFavoriteJob", auth_middleware, (request, response) => {
   const username = request.username;
