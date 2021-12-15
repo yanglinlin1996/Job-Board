@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
 import MainContent from './MainContent';
+import { TOKEN_KEY } from '../ constants';
 
 const App = () => {
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-    const [ currentUser, setCurrentUser ] = useState('');
     
-    const loggedIn = user => {
-        if (user) {
+    const loggedIn = token => {
+        if (token) {
             setIsLoggedIn(true);
-            setCurrentUser(user);
-            console.log(user, "is logged in successfully!");
+            localStorage.setItem(TOKEN_KEY, token);
+            console.log("User is logged in successfully!");
         }
     }
 
     const logout = () => {
         console.log("user logged out!");
         setIsLoggedIn(false);
-        setCurrentUser('');
+        localStorage.removeItem(TOKEN_KEY);
     }
 
     return (
         <div>
-            <NavBar currentUser={ currentUser } handleLogout={ logout }/>
+            <NavBar isLoggedIn={ isLoggedIn } handleLogout={ logout }/>
             <MainContent isLoggedIn={ isLoggedIn } handleLoggedIn={ loggedIn }/>
         </div>
     );

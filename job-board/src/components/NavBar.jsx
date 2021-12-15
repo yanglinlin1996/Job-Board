@@ -1,19 +1,20 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import { TOKEN_KEY } from '../ constants';
 
 const NavBar = (props) => {
-    const { currentUser, handleLogout } = props;
-    console.log("current user in navbar: ", currentUser);
+    const { isLoggedIn, handleLogout } = props;
+    console.log("current user in navbar: ", localStorage.getItem(TOKEN_KEY));
 
     return (
-        currentUser
+        isLoggedIn
             ?
         <div className="navbar">
             <Button variant="contained" className="navbarButton" href="/">Home</Button>
             <Button variant="contained" className="navbarButton" href="/login">Create Job</Button>
-            <Button variant="contained" className="navbarButton" href="/logout">Log Out</Button>
+            <Button variant="contained" className="navbarButton" href="/logout" onClick={ handleLogout } >Log Out</Button>
             <Button variant="contained" className="navbarButton" href="/favorites">Favorites</Button>
-            <Button variant="contained" className="navbarButton" >{ currentUser }</Button>
+            <Button variant="contained" className="navbarButton" >{ localStorage.getItem(TOKEN_KEY) }</Button>
         </div>
             :
         <div className="navbar">
