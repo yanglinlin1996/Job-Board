@@ -12,8 +12,8 @@ const NavBar = (props) => {
             ?
         <div className="navbar">
             <Button variant="contained" className="navbarButton" href="/">Home</Button>
-            <Button variant="contained" className="navbarButton" href="/login">Create Job</Button>
-            <Button variant="contained" className="navbarButton" href="/logout" onClick={ handleLogout } >Log Out</Button>
+            <Button variant="contained" className="navbarButton" href="/createJob">Create Job</Button>
+            <Button variant="contained" className="navbarButton" onClick={ handleLogout } >Log Out</Button>
             <Button variant="contained" className="navbarButton" href="/favorites">Favorites</Button>
             <Button variant="contained" className="navbarButton" >{ localStorage.getItem(TOKEN_KEY) }</Button>
         </div>

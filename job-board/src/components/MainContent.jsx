@@ -14,7 +14,6 @@ const MainContent = (props) => {
                     <Route path="/" element={<Home isLoggedIn={ isLoggedIn } />} />
                     <Route path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
                     <Route path="/signUp" element={<SignUp />} />
-                    <Route path="/logout" element={<Home isLoggedIn={ isLoggedIn } />} />
                 </Routes>
             </Router>
             
