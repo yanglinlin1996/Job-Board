@@ -4,20 +4,20 @@ import MainContent from './MainContent';
 import { TOKEN_KEY } from '../ constants';
 
 const App = () => {
-    const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+    const [ isLoggedIn, setIsLoggedIn ] = useState(localStorage.getItem(TOKEN_KEY) ? true : false);
     
     const loggedIn = token => {
         if (token) {
-            setIsLoggedIn(true);
             localStorage.setItem(TOKEN_KEY, token);
+            setIsLoggedIn(true);
             console.log("User is logged in successfully!");
         }
     }
 
     const logout = () => {
         console.log("user logged out!");
-        setIsLoggedIn(false);
         localStorage.removeItem(TOKEN_KEY);
+        setIsLoggedIn(false);
     }
 
     return (

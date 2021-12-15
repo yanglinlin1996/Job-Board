@@ -5,6 +5,7 @@ import { TOKEN_KEY } from '../ constants';
 const NavBar = (props) => {
     const { isLoggedIn, handleLogout } = props;
     console.log("current user in navbar: ", localStorage.getItem(TOKEN_KEY));
+    console.log("is logged in value is: ", isLoggedIn);
 
     return (
         isLoggedIn
