@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -18,14 +19,18 @@ const SearchResults = (props) => {
     
     const jobCardsComponent = [];
 
+    // const onCardClick = () => {
+    //   this.props.history.push("/jobDetails", {
+    //     job: job
+    //   })
+    // }
+
     if (jobResults) {
       for (let i = 0; i < jobResults.length; i++) {
         const job = jobResults[i];
         jobCardsComponent.push(
+          <Link to="/jobDetails" state={job}>
           <Card sx={{ maxWidth: 345 }}>
-            <ButtonBase>
-
-            </ButtonBase>
             <CardHeader 
               title={job.title}
               subheader={job.postingDate}
@@ -39,6 +44,7 @@ const SearchResults = (props) => {
               </Typography>
             </CardContent>
           </Card>
+          </Link>
         )
       }
     }

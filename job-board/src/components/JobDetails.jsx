@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
+
+
 
 
 const JobDetails = () => {
-    const jobId = useParams().jobId;
+    const location = useLocation();
+    const job = location.state;
+    console.log("In job details page, Job details are: ");
+    console.log(job);
 
-    const findJobDetails = () => {
-        axios.get('/api/job/jobSearch?id=' + jobId).then((response) => setJob(response[0])).catch((error) => console.log("Could not find Job."))
-    }
-
-    const [job, setJob] = useState(null);
-    useEffect(findJobDetails, []);
-
+    const navigate = useNavigate();
     const jobComponent = job ? 
         (<div><div>
             Job Title: {job.title}
@@ -37,9 +38,12 @@ const JobDetails = () => {
         </div>
         </div>) :
         (<div> No Job Found </div>);
-
     return (
-        {jobComponent}
+        <div>
+            <div>{jobComponent}</div>
+            <button onClick={() => navigate(-1)}>Back</button>
+        </div>
+        
     )
 }
 
