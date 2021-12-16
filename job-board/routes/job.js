@@ -52,6 +52,7 @@ router.get("/jobSearchByLoc", (request, response) => {
 
 // Create a job post
 router.post("/create", auth_middleware, (request, response) => {
+  console.log("entering create job......");
   const job = request.body;
   if (
     !job.title ||
