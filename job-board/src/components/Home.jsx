@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SearchResults from './SearchResults';
 
 const Home = (props) => {
     const { isLoggedIn } = props;
     const [formInput, setFormInput] = useState('');
-    //const [job, setJob] = useState({title: ""});
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [jobResults, setJobResults] = useState([]);
 
-    function onSearchButtonClick() {
-        if (!formInput) {
-            setErrorMessage("You must type in a Job title you are looking for.");
-            return;
-        }
-        // Find Job with requesting job title
-        // axios.get('/api/job/jobSearchByTitle/' + formInput).then(response => setJob(response.data)).catch(error => setJob({title: "No Job found"}));
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        setFormInput(data.get("searchWord"));
+        console.log(formInput);
+      
+        // axios.get("http://localhost:8000/api/job/jobSearchByTitle/" + formInput).then(response => {setJobResults(response.data)}).catch(error => console.log(error));
+    };
+    function findJobs() {
+        axios.get("/api/job/jobSearchByTitle/" + formInput).then(response => {setJobResults(response.data)}).catch(error => console.log(error));
     }
+    useEffect(findJobs, []);
+    console.log("Job Results are: " + jobResults);
     return (
         <div>
             <div className='titleContainer'>
                 Welcome To Job Search Board
             </div>
             {/* is there a better search bar? */}
-            <div className='searchBox'>
+            <Box component="form" noValidate className='searchBox' onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <FormControl sx={{ width: '50ch' }}>
                     <TextField 
+                        required
+                        fullWidth
+                        name="searchWord"
                         label="What job are you looking for..." 
-                        value={formInput} 
-                        onChange={(e) => {
-                            setFormInput(e.target.value)
-                        }}
                     />
                 </FormControl>
-                <Button variant="contained" onClick = {onSearchButtonClick}>Search</Button>
-                <SearchResults searchJobTitle = {formInput}></SearchResults>
-            </div>
+                <Button type="submit" variant="contained">Search</Button>
+            </Box>
+            <SearchResults jobResults = {jobResults}></SearchResults>
             <div className='displaySearchResults'>
                 Search results show here...
             </div>

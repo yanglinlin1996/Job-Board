@@ -11,12 +11,9 @@ it's going to be rendering the React component App (which we'll create in a seco
 element of the HTML document (this is actually using the DOM API to find this element!)
 */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App";
+import "./index.css";
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById("root"));

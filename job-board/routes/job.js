@@ -23,15 +23,16 @@ router.get("/findAll", (request, response) => {
 });
 
 // Return Job by id
-router.get("/jobSearch", (request, response) => {
-  return JobAccessor.findJobById(request.query.id)
+router.get("/jobSearch/:id", (request, response) => {
+  console.log(request.params.id);
+  return JobAccessor.findJobById(request.params.id)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
 
 // Return Job by title
-router.get("/jobSearchByTitle", (request, response) => {
-  return JobAccessor.findJobByTitle(request.query.title)
+router.get("/jobSearchByTitle/:title", (request, response) => {
+  return JobAccessor.findJobByTitle(request.params.title)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
 });
@@ -108,7 +109,7 @@ router.get("/getJobsByUser", auth_middleware, (request, response) => {
   JobAccessor.getJobsByUser(creator)
     .then((jobsResponse) => response.status(200).send(jobsResponse))
     .catch((error) => response.status(400).send(error));
-})
+});
 
 // update the job matching the job id
 router.put("/updateJob", auth_middleware, (request, response) => {
