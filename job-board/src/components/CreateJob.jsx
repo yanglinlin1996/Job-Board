@@ -37,31 +37,29 @@ import {
     });
 
     const onSubmit = data => {
-        // console.log(JSON.stringify(data, null, 2));
-        // event.preventDefault();
-        const dataFromUser = JSON.stringify(data, null, 2);
         const jobData = {
-            title: dataFromUser.jobtitle,
-            companyName: dataFromUser.companyname,
-            location: dataFromUser.location,
-            description: dataFromUser.description,
-            employerEmailContact: dataFromUser.email,
-            companyWebsite: dataFromUser.website
+            title: data.jobtitle,
+            companyName: data.companyname,
+            location: data.location,
+            description: data.description,
+            employerEmailContact: data.email,
+            companyWebsite: data.website
         };
+
+        console.log("JOB DATA: ", jobData);
 
         const opt = {
             method: "POST",
-            url: "http://localhost:8000/api/job/create",
+            url: "/api/job/create",
             data: jobData,
             headers: { "content-type": "application/json" },
-            // withCredentials: true
         };
 
         axios(opt)
             .then(response => { 
                 if (response.status === 200) {
                     console.log("Create job response is: ", response);
-                    // handleLoggedIn(response.data);
+                    alert("Job created successfully")
                     // navigate('/');
                 }
             })

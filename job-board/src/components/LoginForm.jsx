@@ -27,7 +27,7 @@ export default function LoginForm(props) {
         // axios.defaults.withCredentials = true;
         const opt = {
             method: "POST",
-            url: "http://localhost:8000/api/user/authenticate",
+            url: "/api/user/authenticate",
             data: userData,
             headers: { "content-type": "application/json" },
             // withCredentials: true

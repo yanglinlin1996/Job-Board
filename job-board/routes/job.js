@@ -54,6 +54,7 @@ router.get("/jobSearchByLoc", (request, response) => {
 router.post("/create", auth_middleware, (request, response) => {
   console.log("entering create job......");
   const job = request.body;
+  console.log(JSON.stringify(job));
   if (
     !job.title ||
     !job.companyName ||
