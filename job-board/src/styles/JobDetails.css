@@ -1,0 +1,12 @@
+.jobContainer {
+  border: 1px solid pink;
+  margin: 2em 1em 1em 1em;
+  display: flex;
+}
+
+.jobDetail {
+  height: 150px;
+  width: 600px;
+  border: 1px solid grey;
+  margin-right: 2em;
+}
