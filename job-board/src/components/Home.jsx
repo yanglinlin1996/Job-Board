@@ -8,22 +8,16 @@ import SearchResults from './SearchResults';
 
 const Home = (props) => {
     const { isLoggedIn } = props;
-    const [formInput, setFormInput] = useState('');
+    // const [formInput, setFormInput] = useState('');
     const [jobResults, setJobResults] = useState([]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        setFormInput(data.get("searchWord"));
-        console.log(formInput);
       
-        // axios.get("http://localhost:8000/api/job/jobSearchByTitle/" + formInput).then(response => {setJobResults(response.data)}).catch(error => console.log(error));
+        axios.get("/api/job/jobSearchByTitle/" + data.get("searchWord")).then(response => {setJobResults(response.data)}).catch(error => console.log(error));
     };
-    function findJobs() {
-        axios.get("/api/job/jobSearchByTitle/" + formInput).then(response => {setJobResults(response.data)}).catch(error => console.log(error));
-    }
-    useEffect(findJobs, []);
-    console.log("Job Results are: " + jobResults);
+    
     return (
         <div>
             <div className='titleContainer'>
@@ -41,7 +35,7 @@ const Home = (props) => {
                 </FormControl>
                 <Button type="submit" variant="contained">Search</Button>
             </Box>
-            <SearchResults jobResults = {jobResults}></SearchResults>
+            <SearchResults jobResults={jobResults}></SearchResults>
             <div className='displaySearchResults'>
                 Search results show here...
             </div>
