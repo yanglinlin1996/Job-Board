@@ -64,7 +64,7 @@ import {
                     alert("Job created successfully");
                     
                     //setJob(response.data);
-                    // navigate('/');
+                    navigate(`/jobDetails/${response.data.id}`);
                 }
             })
             .catch(() => navigate('/'));

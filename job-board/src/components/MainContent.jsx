@@ -22,7 +22,7 @@ const MainContent = (props) => {
                     <Route exact path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
                     <Route exact path="/signUp" element={<SignUp />} />
                     <Route exact path="/createJob" element={<CreateJob />} />
-                    <Route exact path="/updateJob/:jobId" element={<UpdateJob />} />
+                    <Route exact path="/updateJob" element={<UpdateJob />} />
                     <Route exact path="/favorites" element={<Favorites />} />
                     <Route exact path="/jobDetails/:jobId" element={<JobDetails user={user} />}/>
                     <Route render={() => <h1>Page not found!</h1>} />

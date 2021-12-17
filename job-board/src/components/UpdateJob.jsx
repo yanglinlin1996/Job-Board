@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,17 +19,17 @@ import {
     const job = location.state;
     
     const validationSchema = Yup.object().shape({
-        jobtitle: Yup.string().required('Job title is required'),
-        companyname: Yup.string()
+        title: Yup.string().required('Job title is required'),
+        companyName: Yup.string()
           .required('Company name is required'),
         location: Yup.string()
           .required('Location is required'),
         description: Yup.string()
           .required('Description is required'),
-        email: Yup.string()
+        employerEmailContact: Yup.string()
         .required('Email is required')
         .email('Email is invalid'),
-        website: Yup.string()
+        companyWebsite: Yup.string()
       });
 
     const {
@@ -38,23 +39,23 @@ import {
       } = useForm({
         resolver: yupResolver(validationSchema)
     });
-
+    const navigate = useNavigate();
     const onSubmit = data => {
-        const jobData = {
-            title: data.jobtitle,
-            companyName: data.companyname,
-            location: data.location,
-            description: data.description,
-            employerEmailContact: data.email,
-            companyWebsite: data.website
-        };
+        // const jobData = {
+        //     title: data.jobtitle,
+        //     companyName: data.companyname,
+        //     location: data.location,
+        //     description: data.description,
+        //     employerEmailContact: data.email,
+        //     companyWebsite: data.website
+        // };
 
-        console.log("JOB DATA: ", jobData);
+        console.log("JOB DATA: ", data);
 
         const opt = {
             method: "POST",
             url: "/api/job/create",
-            data: jobData,
+            data: data,
             headers: { "content-type": "application/json" },
         };
 
@@ -63,7 +64,7 @@ import {
                 if (response.status === 200) {
                     console.log("Update job response is: ", response);
                     alert("Job updated successfully")
-                    // navigate('/');
+                    navigate(`/jobDetails/${response.data.id}`);
                 }
             })
             .catch(error => console.log("Create job failed: ", error.message));
@@ -81,13 +82,13 @@ import {
             <Grid item xs={12} sm={12}>
               <TextField
                 required
-                id=""
-                name="jobtitle"
+                id="title"
+                name="title"
                 label="Job Title"
                 fullWidth
                 margin="dense"
-                {...register('jobtitle')}
-                error={errors.jobtitle ? true : false}
+                {...register('title')}
+                error={errors.title ? true : false}
                 defaultValue={job.title}
               />
               <Typography variant="inherit" color="textSecondary">
@@ -97,17 +98,17 @@ import {
             <Grid item xs={12} sm={12}>
               <TextField
                 required
-                id="companyname"
-                name="companyname"
+                id="companyName"
+                name="companyName"
                 label="Company Name"
                 fullWidth
                 margin="dense"
-                {...register('companyname')}
-                error={errors.companyname ? true : false}
+                {...register('companyName')}
+                error={errors.companyName ? true : false}
                 defaultValue={job.companyName}
               />
               <Typography variant="inherit" color="textSecondary">
-                {errors.companyname?.message}
+                {errors.companyName?.message}
               </Typography>
             </Grid>
             
@@ -148,33 +149,33 @@ import {
             <Grid item xs={12} sm={12}>
               <TextField
                 required
-                id="email"
-                name="email"
+                id="employerEmailContact"
+                name="employerEmailContact"
                 label="Email"
                 fullWidth
                 margin="dense"
-                {...register('email')}
-                error={errors.email ? true : false}
+                {...register('employerEmailContact')}
+                error={errors.employerEmailContact ? true : false}
                 defaultValue={job.employerEmailContact}
               />
               <Typography variant="inherit" color="textSecondary">
-                {errors.email?.message}
+                {errors.employerEmailContact?.message}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField
                 
-                id="website"
-                name="website"
+                id="companyWebsite"
+                name="companyWebsite"
                 label="Website (optional)"
                 fullWidth
                 margin="dense"
-                {...register('website')}
-                error={errors.website ? true : false}
+                {...register('companyWebsite')}
+                error={errors.companyWebsite ? true : false}
                 defaultValue={job.companyWebsite}
               />
               <Typography variant="inherit" color="textSecondary">
-                {errors.website?.message}
+                {errors.companyWebsite?.message}
               </Typography>
             </Grid>
           </Grid>
