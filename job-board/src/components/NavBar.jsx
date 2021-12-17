@@ -5,19 +5,17 @@ import { Link } from 'react-router-dom';
 import { TOKEN_KEY } from '../ constants';
 
 const NavBar = (props) => {
-    const { isLoggedIn, handleLogout } = props;
-    console.log("current user in navbar: ", localStorage.getItem(TOKEN_KEY));
-    console.log("is logged in value is: ", isLoggedIn);
+    const { handleLogout, user } = props;
 
     return (
-        isLoggedIn
+        user
             ?
         <div className="navbar">
             <Button variant="contained" className="navbarButton" href="/">Home</Button>
             <Button variant="contained" className="navbarButton" href="/createJob">Create Job</Button>
             <Button variant="contained" className="navbarButton" onClick={ handleLogout } >Log Out</Button>
             <Button variant="contained" className="navbarButton" href="/favorites">Favorites</Button>
-            <Button variant="contained" className="navbarButton" >{ localStorage.getItem(TOKEN_KEY) }</Button>
+            <Button variant="contained" className="navbarButton" >{ user }</Button>
         </div>
             :
         <div className="navbar">

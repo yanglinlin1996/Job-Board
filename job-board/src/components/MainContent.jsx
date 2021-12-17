@@ -9,13 +9,14 @@ import Favorites from './Favorites';
 import JobDetails from './JobDetails';
 
 const MainContent = (props) => {
-    const { isLoggedIn, handleLoggedIn } = props;
+    const { handleLoggedIn, user } = props;
+    console.log("user in main content is: ", user);
 
     return (
         <div className='mainContent'>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Home isLoggedIn={ isLoggedIn } />} />
+                    <Route path="/" element={<Home user={user} />} />
                     <Route path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
                     <Route path="/signUp" element={<SignUp />} />
                     <Route path="/createJob" element={<CreateJob />} />

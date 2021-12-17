@@ -62,7 +62,7 @@ router.post("/authenticate", (request, response) => {
       }
       if (userResponse[0].password === password) {
         request.session.username = username;
-        return response.status(200).send(userResponse);
+        return response.status(200).send(username);
       } else {
         return response.status(404).send("Invalid password.");
       }

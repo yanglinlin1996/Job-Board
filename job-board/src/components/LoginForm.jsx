@@ -24,20 +24,16 @@ export default function LoginForm(props) {
             password: data.get('password'),
         };
 
-        // axios.defaults.withCredentials = true;
         const opt = {
             method: "POST",
             url: "/api/user/authenticate",
             data: userData,
             headers: { "content-type": "application/json" },
-            // withCredentials: true
         };
 
         axios(opt)
             .then(response => { 
                 if (response.status === 200) {
-                    console.log("login response is: ", response);
-                    console.log("header!!!!", response.headers);
                     handleLoggedIn(response.data);
                     navigate('/');
                 }

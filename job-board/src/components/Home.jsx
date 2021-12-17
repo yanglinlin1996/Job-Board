@@ -7,8 +7,9 @@ import Button from '@mui/material/Button';
 import SearchResults from './SearchResults';
 
 const Home = (props) => {
-    const { isLoggedIn } = props;
-    // const [formInput, setFormInput] = useState('');
+    const { user } = props;
+    console.log("user in home is: ", user);
+
     const [jobResults, setJobResults] = useState([]);
 
     const handleSubmit = (event) => {
