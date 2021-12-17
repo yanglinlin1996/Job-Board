@@ -6,10 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SearchResults from './SearchResults';
 
-const Home = (props) => {
-    const { user } = props;
-    console.log("user in home is: ", user);
-
+const Home = () => {
     const [jobResults, setJobResults] = useState([]);
 
     const handleSubmit = (event) => {
@@ -37,9 +34,6 @@ const Home = (props) => {
                 <Button type="submit" variant="contained">Search</Button>
             </Box>
             <SearchResults jobResults={jobResults}></SearchResults>
-            <div className='displaySearchResults'>
-                Search results show here...
-            </div>
         </div>
     )
 }

@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import '../styles/JobDetails.css';
-import Favorite from '@mui/icons-material/Favorite';
-import CreateJob from './CreateJob';
 
-const JobDetails = () => {
+const JobDetails = (props) => {
     const location = useLocation();
     const job = location.state;
+    const user = props;
+
     console.log("In job details page, Job details are: ");
     console.log(job);
 
-    const navigate = useNavigate();
+    console.log("In job details page, user is: ", user);
 
-    const handleEditOnClick = () => {
-        console.log("You clicked edit icon!");
-        navigate('/createJob');
-    }
+    const navigate = useNavigate();
 
     const handleDeleteOnClick = () => {
         console.log("You clicked delete icon!");
@@ -94,8 +90,16 @@ const JobDetails = () => {
                 </div>
             </div>
             <div className='icons'>
-                <Link to="/updateJob" state={job}><EditIcon/></Link>
-                <DeleteIcon onClick={handleDeleteOnClick}/>
+                {
+                    user === job.creator 
+                        ?
+                    <div>
+                        <Link to="/updateJob" state={job}><EditIcon/></Link>
+                        <DeleteIcon onClick={handleDeleteOnClick}/>
+                    </div>
+                        :
+                    null
+                }
                 <FavoriteIcon onClick={handleFavoriteOnClick}/>
             </div>
         </div>

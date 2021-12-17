@@ -16,13 +16,13 @@ const MainContent = (props) => {
         <div className='mainContent'>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Home user={user} />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
                     <Route path="/signUp" element={<SignUp />} />
                     <Route path="/createJob" element={<CreateJob />} />
                     <Route path="/updateJob" element={<UpdateJob />} />
                     <Route path="/favorites" element={<Favorites />} />
-                    <Route path="/jobDetails" element={<JobDetails />}/>
+                    <Route path="/jobDetails" element={<JobDetails user={user} />}/>
                 </Routes>
             </Router>
             
