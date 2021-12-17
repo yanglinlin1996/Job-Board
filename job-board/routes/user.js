@@ -130,6 +130,8 @@ router.get("/getFavoriteJobsByUser", auth_middleware, (request, response) => {
 router.put("/addFavoriteJob", auth_middleware, (request, response) => {
   const username = request.username;
   const jobId = request.query.id;
+  console.log("add favorite job username: ", username);
+  console.log("add favorite job id: ", jobId);
   // Check if job already in favorite list
   UserModel.findUserByUsername(username)
     .then((userResponse) => {

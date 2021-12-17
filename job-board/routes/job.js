@@ -147,6 +147,7 @@ router.put("/updateJob", auth_middleware, (request, response) => {
 // Delete job with the job id
 router.delete("/delete", auth_middleware, (request, response) => {
   const id = request.query.id;
+  console.log("Job id in delete api is: ", id);
 
   // Check if job existed matching the job id
   JobAccessor.findJobById(id)
@@ -158,7 +159,7 @@ router.delete("/delete", auth_middleware, (request, response) => {
           .then((jobResponse) =>
             response.status(200).send("Job deleted successfully!")
           )
-          .catch((error) => response.status(400).send("Fail to update job."));
+          .catch((error) => response.status(400).send("Fail to delete job."));
       }
     })
     .catch((error) =>

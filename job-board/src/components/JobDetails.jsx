@@ -3,10 +3,12 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import '../styles/JobDetails.css';
-
-
-
+import Favorite from '@mui/icons-material/Favorite';
+import CreateJob from './CreateJob';
 
 const JobDetails = () => {
     const location = useLocation();
@@ -15,6 +17,54 @@ const JobDetails = () => {
     console.log(job);
 
     const navigate = useNavigate();
+
+    const handleEditOnClick = () => {
+        console.log("You clicked edit icon!");
+        navigate('/createJob');
+    }
+
+    const handleDeleteOnClick = () => {
+        console.log("You clicked delete icon!");
+
+        const opt = {
+            method: "DELETE",
+            url: "/api/job/delete",
+            params: {
+                id: job.id
+            },
+            headers: { "content-type": "application/json" },
+        };
+
+        axios(opt)
+            .then(response => { 
+                if (response.status === 200) {
+                    console.log("Successfully deleted the job: ", response);
+                }
+            })
+            .catch(error => console.log("Delete job failed: ", error.message));
+    }
+
+    const handleFavoriteOnClick = () => {
+        console.log("You clicked favorite icon!");
+
+        const opt = {
+            method: "PUT",
+            url: "/api/user/addFavoriteJob",
+            params: {
+                id: job.id
+            },
+            headers: { "content-type": "application/json" },
+        };
+
+        axios(opt)
+            .then(response => { 
+                if (response.status === 200) {
+                    console.log("Successfully add to favorite: ", response);
+                }
+            })
+            .catch(error => console.log("Add to favorite failed: ", error.message));
+    }
+
     const jobComponent = 
         job 
             ? 
@@ -43,7 +93,9 @@ const JobDetails = () => {
                 </div>
             </div>
             <div className='icons'>
-                icons(edit/delete/favorite)
+                <EditIcon onClick={handleEditOnClick}/>
+                <DeleteIcon onClick={handleDeleteOnClick}/>
+                <FavoriteIcon onClick={handleFavoriteOnClick}/>
             </div>
         </div>
             :
