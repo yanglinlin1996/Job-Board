@@ -1,6 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import {
@@ -15,43 +17,43 @@ import {
   const CreateJob = () => {
     
     const validationSchema = Yup.object().shape({
-        jobtitle: Yup.string().required('Job title is required'),
-        companyname: Yup.string()
+        title: Yup.string().required('Job title is required'),
+        companyName: Yup.string()
           .required('Company name is required'),
         location: Yup.string()
           .required('Location is required'),
         description: Yup.string()
           .required('Description is required'),
-        email: Yup.string()
+        employerEmailContact: Yup.string()
         .required('Email is required')
         .email('Email is invalid'),
-        website: Yup.string()
+        companyWebsite: Yup.string()
       });
 
     const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm({
-        resolver: yupResolver(validationSchema)
-    });
+      register,
+      handleSubmit,
+      formState: { errors }
+    } = useForm({ resolver: yupResolver(validationSchema)});
 
+    const navigate = useNavigate();
+    const [job, setJob] = useState({});
     const onSubmit = data => {
-        const jobData = {
-            title: data.jobtitle,
-            companyName: data.companyname,
-            location: data.location,
-            description: data.description,
-            employerEmailContact: data.email,
-            companyWebsite: data.website
-        };
+        // const jobData = {
+        //     title: data.jobtitle,
+        //     companyName: data.companyname,
+        //     location: data.location,
+        //     description: data.description,
+        //     employerEmailContact: data.email,
+        //     companyWebsite: data.website
+        // };
 
-        console.log("JOB DATA: ", jobData);
+        console.log("JOB DATA: ", data);
 
         const opt = {
             method: "POST",
             url: "/api/job/create",
-            data: jobData,
+            data: data,
             headers: { "content-type": "application/json" },
         };
 
@@ -59,12 +61,16 @@ import {
             .then(response => { 
                 if (response.status === 200) {
                     console.log("Create job response is: ", response);
-                    alert("Job created successfully")
+                    alert("Job created successfully");
+                    
+                    //setJob(response.data);
                     // navigate('/');
                 }
             })
-            .catch(error => console.log("Create job failed: ", error.message));
+            .catch(() => navigate('/'));
     };
+
+    console.log("job: " + job);
 
     return (
       <Fragment>
@@ -78,31 +84,31 @@ import {
             <Grid item xs={12} sm={12}>
               <TextField
                 required
-                id=""
-                name="jobtitle"
+                id="title"
+                name="title"
                 label="Job Title"
                 fullWidth
                 margin="dense"
-                {...register('jobtitle')}
+                {...register('title')}
                 error={errors.jobtitle ? true : false}
               />
               <Typography variant="inherit" color="textSecondary">
-                {errors.jobtitle?.message}
+                {errors.title?.message}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField
                 required
-                id="companyname"
-                name="companyname"
+                id="companyName"
+                name="companyName"
                 label="Company Name"
                 fullWidth
                 margin="dense"
-                {...register('companyname')}
-                error={errors.companyname ? true : false}
+                {...register('companyName')}
+                error={errors.companyName ? true : false}
               />
               <Typography variant="inherit" color="textSecondary">
-                {errors.companyname?.message}
+                {errors.companyName?.message}
               </Typography>
             </Grid>
             
@@ -141,43 +147,50 @@ import {
             <Grid item xs={12} sm={12}>
               <TextField
                 required
-                id="email"
-                name="email"
+                id="employerEmailContact"
+                name="employerEmailContact"
                 label="Email"
                 fullWidth
                 margin="dense"
-                {...register('email')}
-                error={errors.email ? true : false}
+                {...register('employerEmailContact')}
+                error={errors.employerEmailContact ? true : false}
               />
               <Typography variant="inherit" color="textSecondary">
-                {errors.email?.message}
+                {errors.employerEmailContact?.message}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField
                 
-                id="website"
-                name="website"
+                id="companyWebsite"
+                name="companyWebsite"
                 label="Website (optional)"
                 fullWidth
                 margin="dense"
-                {...register('website')}
-                error={errors.website ? true : false}
+                {...register('companyWebsite')}
+                error={errors.companyWebsite ? true : false}
               />
               <Typography variant="inherit" color="textSecondary">
-                {errors.website?.message}
+                {errors.companyWebsite?.message}
               </Typography>
             </Grid>
           </Grid>
 
           <Box mt={3}>
+            {/* <Link to="/jobDetails" state={job}>
+              <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit(onSubmit)}>
+              Submit
+            </Button></Link> */}
             <Button
               variant="contained"
               color="primary"
-              onClick={handleSubmit(onSubmit)}
-            >
+              onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
+            
           </Box>
         </Box>
       </Paper>

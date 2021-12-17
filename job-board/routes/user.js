@@ -1,26 +1,12 @@
-// const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const UserModel = require("./models/User.Model");
 const JobAccessor = require("./models/Job.Model");
-// const jwt = require("jsonwebtoken");
 const auth_middleware = require("./auth_middleware.js");
-
-// Returns all known users
-router.get("/findAll", (request, response) => {
-  UserModel.getAllUsers()
-    .then((userResponse) => {
-      response.status(200).send(userResponse);
-    })
-    .catch((error) => response.status(400).send(error));
-});
 
 // check who is logged in with midware auth
 router.get("/whoIsLoggedIn", auth_middleware, function (request, response) {
-  const username = request.session.username;
-
   return response.send(request.session);
-  // return response.send(username);
 });
 
 // check who is logged in without midware auth
@@ -124,16 +110,6 @@ router.get("/getFavoriteJobsByUser", auth_middleware, (request, response) => {
   const username = request.username;
   UserModel.findUserByUsername(username)
     .then((userResponse) => {
-      // let favoriteLists = [];
-      // for (let jobs of userResponse[0].favorites) {
-      //   JobAccessor.findJobById(jobs.jobId)
-      //     .then((jobResponse) => {
-      //       favoriteLists.push(jobResponse[0]);
-      //       //response.status(200).send(jobResponse);
-      //     })
-      //     .catch((error) => response.send(error));
-      // }
-      // response.status(200).send(favoriteLists);
       response.status(200).send(userResponse[0].favorites);
     })
     .catch((error) =>
@@ -173,47 +149,10 @@ router.put("/addFavoriteJob", auth_middleware, (request, response) => {
               );
           })
           .catch((error) => response.send(error));
-        // return UserModel.updateFavoritesById(username, jobId)
-        //   .then((userResponse) => {
-
-        //   }
-        //     response
-        //       .status(200)
-        //       .send("Job added to Favorites list successfully!")
-        //   )
-        //   .catch((error) =>
-        //     request.status(404).send("Fail to add job to favorites list.")
-        //   );
       }
     })
     .catch((error) => console.error(`Something went wrong: ${error}`));
 });
-
-// Remove job from user job favorite list
-// router.delete("/deleteFavoriteJob", (request, response) => {
-//   const username = request.query.username;
-//   const jobId = request.query.id;
-//   UserModel.findUserByUsername(username)
-//     .then((userResponse) => {
-//       const favorites = userResponse[0].favorites;
-//       if (!favorites.find((job) => job.jobId === jobId)) {
-//         return response
-//           .status(404)
-//           .send("The job is not found in the favorite list.");
-//       } else {
-//         return UserModel.deleteJobFromFavoritesById(username, jobId)
-//           .then((userResponse) =>
-//             response
-//               .status(200)
-//               .send("Job removed from Favorites list successfully!")
-//           )
-//           .catch((error) =>
-//             request.status(404).send("Fail to remove job from favorites list.")
-//           );
-//       }
-//     })
-//     .catch((error) => console.error(`Something went wrong: ${error}`));
-// });
 
 // Log user out
 router.post("/logout", (request, response) => {

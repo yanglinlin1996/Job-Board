@@ -61,8 +61,8 @@ import {
         axios(opt)
             .then(response => { 
                 if (response.status === 200) {
-                    console.log("Create job response is: ", response);
-                    alert("Job created successfully")
+                    console.log("Update job response is: ", response);
+                    alert("Job updated successfully")
                     // navigate('/');
                 }
             })

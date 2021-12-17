@@ -4,17 +4,6 @@ const router = express.Router();
 const JobAccessor = require("./models/Job.Model");
 const { v4: uuid } = require("uuid");
 
-const jobs = [
-  {
-    id: "fc10b559-872c-43cd-bad2-f02e2e0a2d58",
-    title: "Day Porter/Janitor",
-    companyName: "5 Star 5 Inc",
-    location: "Bellevue, WA",
-    description: "Job Type: Full-time, Part Time available.",
-    employerEmailContact: "abc@gmail.com",
-  },
-];
-
 // Returns all known Jobs
 router.get("/findAll", (request, response) => {
   return JobAccessor.getAllJobs()
@@ -37,20 +26,6 @@ router.get("/jobSearchByTitle/:title", (request, response) => {
     .catch((error) => response.status(400).send(error));
 });
 
-// Return Jobs by Company Name
-router.get("/jobSearchByCompany", (request, response) => {
-  return JobAccessor.findJobByCompanyName(request.query.companyName)
-    .then((jobResponse) => response.status(200).send(jobResponse))
-    .catch((error) => response.status(400).send(error));
-});
-
-// Return Jobs by Location
-router.get("/jobSearchByLoc", (request, response) => {
-  return JobAccessor.findJobByLocation(request.query.location)
-    .then((jobResponse) => response.status(200).send(jobResponse))
-    .catch((error) => response.status(400).send(error));
-});
-
 // Create a job post
 router.post("/create", auth_middleware, (request, response) => {
   console.log("entering create job......");
@@ -69,9 +44,6 @@ router.post("/create", auth_middleware, (request, response) => {
   job.creator = request.username;
 
   // Check if the new job post content already exists
-  //   if (!JobAccessor.findJobByJobDetails(job)) {
-  //     createJob(job);
-  //   }
   JobAccessor.findJobByJobDetails(job)
     .then((jobResponse) => {
       if (jobResponse.length) {
@@ -112,8 +84,8 @@ router.get("/getJobsByUser", auth_middleware, (request, response) => {
 });
 
 // update the job matching the job id
-router.put("/updateJob", auth_middleware, (request, response) => {
-  const id = request.query.id;
+router.put("/updateJob/:id", auth_middleware, (request, response) => {
+  const id = request.params.id;
   const job = request.body;
 
   if (
@@ -145,8 +117,8 @@ router.put("/updateJob", auth_middleware, (request, response) => {
 });
 
 // Delete job with the job id
-router.delete("/delete", auth_middleware, (request, response) => {
-  const id = request.query.id;
+router.delete("/delete/:id", auth_middleware, (request, response) => {
+  const id = request.params.id;
   console.log("Job id in delete api is: ", id);
 
   // Check if job existed matching the job id

@@ -6,7 +6,6 @@ const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
 
     const findAllFavorites = () => {
-        const username = "wsz";
         axios.get("/api/user/getFavoriteJobsByUser").then(response => {setFavorites(response.data)}).catch(error => console.log(error));
         console.log(favorites);
     };

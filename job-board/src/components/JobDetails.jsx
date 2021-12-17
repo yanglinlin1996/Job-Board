@@ -1,7 +1,7 @@
-import React  from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,15 +9,24 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import '../styles/JobDetails.css';
 
 const JobDetails = (props) => {
-    const location = useLocation();
-    const job = location.state;
+
+    // const location = useLocation();
+    // const job = location.state;
     const user = props;
+    const { jobId } = useParams();
+    console.log("jobId: " + jobId);
+    function findJobDetails() {
+        if (jobId) {
+            console.log(jobId);
+            axios.get(`/api/job/jobSearch/${jobId}`).then((response) => setJob(response.data[0])).catch((error) => console.log(error));
+        }
+    }
 
-    console.log("In job details page, Job details are: ");
+    const [job, setJob] = useState({});
+    useEffect(findJobDetails, [jobId]);
+    
+
     console.log(job);
-
-    console.log("In job details page, user is: ", user);
-
     const navigate = useNavigate();
 
     const handleDeleteOnClick = () => {
@@ -27,7 +36,7 @@ const JobDetails = (props) => {
             method: "DELETE",
             url: "/api/job/delete",
             params: {
-                id: job.id
+                id: jobId
             },
             headers: { "content-type": "application/json" },
         };
@@ -48,7 +57,7 @@ const JobDetails = (props) => {
             method: "PUT",
             url: "/api/user/addFavoriteJob",
             params: {
-                id: job.id
+                id: jobId
             },
             headers: { "content-type": "application/json" },
         };

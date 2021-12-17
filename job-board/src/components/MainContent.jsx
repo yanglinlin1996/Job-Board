@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Home';
+import SearchResults from './SearchResults';
 import LoginForm from './LoginForm';
 import SignUp from './SignUpForm';
 import CreateJob from './CreateJob';
@@ -16,13 +17,15 @@ const MainContent = (props) => {
         <div className='mainContent'>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
-                    <Route path="/signUp" element={<SignUp />} />
-                    <Route path="/createJob" element={<CreateJob />} />
-                    <Route path="/updateJob" element={<UpdateJob />} />
-                    <Route path="/favorites" element={<Favorites />} />
-                    <Route path="/jobDetails" element={<JobDetails user={user} />}/>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/:searchWord" element={<SearchResults />} />
+                    <Route exact path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
+                    <Route exact path="/signUp" element={<SignUp />} />
+                    <Route exact path="/createJob" element={<CreateJob />} />
+                    <Route exact path="/updateJob/:jobId" element={<UpdateJob />} />
+                    <Route exact path="/favorites" element={<Favorites />} />
+                    <Route exact path="/jobDetails/:jobId" element={<JobDetails user={user} />}/>
+                    <Route render={() => <h1>Page not found!</h1>} />
                 </Routes>
             </Router>
             
