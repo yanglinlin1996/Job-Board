@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,10 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import '../styles/JobDetails.css';
 
 const JobDetails = (props) => {
-
-    // const location = useLocation();
-    // const job = location.state;
-    const user = props;
+    const { user } = props;
     const { jobId } = useParams();
     console.log("jobId: " + jobId);
     function findJobDetails() {
@@ -25,8 +21,6 @@ const JobDetails = (props) => {
     const [job, setJob] = useState({});
     useEffect(findJobDetails, [jobId]);
     
-
-    console.log(job);
     const navigate = useNavigate();
 
     const handleDeleteOnClick = () => {
