@@ -31,8 +31,8 @@ router.get("/whoIsLoggedInButWithoutMiddleware", function (request, response) {
 });
 
 // Return user with requested username
-router.get("/getUser/:username", (request, response) => {
-  const username = request.params.username;
+router.get("/getUser", (request, response) => {
+  const username = request.username;
   if (!username) {
     return response.status(422).send("Missing data");
   }
@@ -120,34 +120,30 @@ router.post("/register", (request, response) => {
   }
 });
 
-router.get(
-  "/getFavoriteJobsByUser/:username",
-  auth_middleware,
-  (request, response) => {
-    const username = request.params.username;
-    UserModel.findUserByUsername(username)
-      .then((userResponse) => {
-        // let favoriteLists = [];
-        // for (let jobs of userResponse[0].favorites) {
-        //   JobAccessor.findJobById(jobs.jobId)
-        //     .then((jobResponse) => {
-        //       favoriteLists.push(jobResponse[0]);
-        //       //response.status(200).send(jobResponse);
-        //     })
-        //     .catch((error) => response.send(error));
-        // }
-        // response.status(200).send(favoriteLists);
-        response.status(200).send(userResponse[0].favorites);
-      })
-      .catch((error) =>
-        response.status(404).send("Fail to get job favorites list.")
-      );
-  }
-);
+router.get("/getFavoriteJobsByUser", auth_middleware, (request, response) => {
+  const username = request.username;
+  UserModel.findUserByUsername(username)
+    .then((userResponse) => {
+      // let favoriteLists = [];
+      // for (let jobs of userResponse[0].favorites) {
+      //   JobAccessor.findJobById(jobs.jobId)
+      //     .then((jobResponse) => {
+      //       favoriteLists.push(jobResponse[0]);
+      //       //response.status(200).send(jobResponse);
+      //     })
+      //     .catch((error) => response.send(error));
+      // }
+      // response.status(200).send(favoriteLists);
+      response.status(200).send(userResponse[0].favorites);
+    })
+    .catch((error) =>
+      response.status(404).send("Fail to get job favorites list.")
+    );
+});
 
 // Add job to user's favorites list
 router.put("/addFavoriteJob", auth_middleware, (request, response) => {
-  const username = request.query.username;
+  const username = request.username;
   const jobId = request.query.id;
   // Check if job already in favorite list
   UserModel.findUserByUsername(username)
