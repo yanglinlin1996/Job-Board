@@ -16,12 +16,12 @@ const App = () => {
             console.log("User is logged in successfully!");
         }
     }
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const logout = () => {
         console.log("user logged out!");
         localStorage.removeItem(TOKEN_KEY);
         setUser('');
-        navigate('/');
+        //navigate('/');
     }
 
     return (
