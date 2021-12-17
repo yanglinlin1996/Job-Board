@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import { Typography } from '@mui/material';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import JobDetails from './JobDetails';
 
 
 const SearchResults = (props) => {

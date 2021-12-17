@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("./models/User.Model");
+const JobAccessor = require("./models/Job.Model");
 // const jwt = require("jsonwebtoken");
 const auth_middleware = require("./auth_middleware.js");
 
@@ -119,47 +120,82 @@ router.post("/register", (request, response) => {
   }
 });
 
-router.get("/getFavoriteJobsByUser", auth_middleware, (request, response) => {
-  const username = request.username;
-  UserModel.findUserByUsername(username)
-    .then(userResponse => {response.status(200).send(userResponse)})
-    .catch(error => request.status(404).send("Fail to remove job favorites list."))
-})
+router.get(
+  "/getFavoriteJobsByUser/:username",
+  auth_middleware,
+  (request, response) => {
+    const username = request.params.username;
+    UserModel.findUserByUsername(username)
+      .then((userResponse) => {
+        // let favoriteLists = [];
+        // for (let jobs of userResponse[0].favorites) {
+        //   JobAccessor.findJobById(jobs.jobId)
+        //     .then((jobResponse) => {
+        //       favoriteLists.push(jobResponse[0]);
+        //       //response.status(200).send(jobResponse);
+        //     })
+        //     .catch((error) => response.send(error));
+        // }
+        // response.status(200).send(favoriteLists);
+        response.status(200).send(userResponse[0].favorites);
+      })
+      .catch((error) =>
+        response.status(404).send("Fail to get job favorites list.")
+      );
+  }
+);
 
 // Add job to user's favorites list
-router.put("/addFavoriteJob", auth_middleware, (request, response) => {
-  const username = request.username;
-  const jobId = request.query.id;
-  console.log("add favorite job username: ", username);
-  console.log("add favorite job id: ", jobId);
-  // Check if job already in favorite list
-  UserModel.findUserByUsername(username)
-    .then((userResponse) => {
-      const favorites = userResponse[0].favorites;
-      if (favorites.find((job) => job.jobId === jobId)) {
-        UserModel.deleteJobFromFavoritesById(username, jobId)
-          .then((userResponse) =>
-            response
-              .status(200)
-              .send("Job removed from favorites list successfully!")
-          )
-          .catch((error) =>
-            request.status(404).send("Fail to remove job favorites list.")
-          );
-      } else {
-        return UserModel.updateFavoritesById(username, jobId)
-          .then((userResponse) =>
-            response
-              .status(200)
-              .send("Job added to Favorites list successfully!")
-          )
-          .catch((error) =>
-            request.status(404).send("Fail to add job to favorites list.")
-          );
-      }
-    })
-    .catch((error) => console.error(`Something went wrong: ${error}`));
-});
+router.put(
+  "/addFavoriteJob/:username",
+  auth_middleware,
+  (request, response) => {
+    const username = request.params.username;
+    const jobId = request.query.id;
+    // Check if job already in favorite list
+    UserModel.findUserByUsername(username)
+      .then((userResponse) => {
+        const favorites = userResponse[0].favorites;
+        if (favorites.find((job) => job.id === jobId)) {
+          UserModel.deleteJobFromFavoritesById(username, jobId)
+            .then((userResponse) =>
+              response
+                .status(200)
+                .send("Job removed from favorites list successfully!")
+            )
+            .catch((error) =>
+              request.status(404).send("Fail to remove job favorites list.")
+            );
+        } else {
+          JobAccessor.findJobById(jobId)
+            .then((jobResponse) => {
+              UserModel.updateFavoritesById(username, jobResponse)
+                .then((userResponse) => {
+                  response
+                    .status(200)
+                    .send("Job added to Favorites list successfully!");
+                })
+                .catch((error) =>
+                  request.status(404).send("Fail to add job to favorites list.")
+                );
+            })
+            .catch((error) => response.send(error));
+          // return UserModel.updateFavoritesById(username, jobId)
+          //   .then((userResponse) => {
+
+          //   }
+          //     response
+          //       .status(200)
+          //       .send("Job added to Favorites list successfully!")
+          //   )
+          //   .catch((error) =>
+          //     request.status(404).send("Fail to add job to favorites list.")
+          //   );
+        }
+      })
+      .catch((error) => console.error(`Something went wrong: ${error}`));
+  }
+);
 
 // Remove job from user job favorite list
 // router.delete("/deleteFavoriteJob", (request, response) => {

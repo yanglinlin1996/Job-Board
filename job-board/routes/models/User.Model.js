@@ -22,17 +22,17 @@ function updatePasswordByUsername(username, password) {
   ).exec();
 }
 
-function updateFavoritesById(username, jobId) {
+function updateFavoritesById(username, job) {
   return UserModel.updateOne(
     { username: username },
-    { $push: { favorites: { jobId: jobId } } }
+    { $push: { favorites: job } }
   ).exec();
 }
 
 function deleteJobFromFavoritesById(username, jobId) {
   return UserModel.updateOne(
     { username: username },
-    { $pull: { favorites: { jobId: jobId } } }
+    { $pull: { favorites: { id: jobId } } }
   );
 }
 
