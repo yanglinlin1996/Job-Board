@@ -13,7 +13,12 @@ const Home = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        navigate(`/search/${data.get("searchWord")}`);
+        const searchWord = data.get("searchWord");
+        if (!searchWord) {
+            alert("Search Word cannot be empty!");
+            navigate(-2);
+        }
+        navigate(`/search/${searchWord}`);
     };
     
     return (

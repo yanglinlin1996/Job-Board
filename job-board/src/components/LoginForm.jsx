@@ -38,7 +38,10 @@ export default function LoginForm(props) {
                     navigate('/');
                 }
             })
-            .catch(error => console.log("Login failed: ", error.message));
+            .catch(error => {
+                alert("No user found with that username!")
+                console.log("Login failed: ", error.message);
+            });
     };
 
     return (
