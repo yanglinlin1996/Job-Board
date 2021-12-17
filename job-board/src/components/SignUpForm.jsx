@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {STYLE} from '../constants.js';
 
 const theme = createTheme();
 
@@ -92,7 +93,7 @@ export default function SignUp() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                            >
+                                style={STYLE}>
                                 Sign Up
                             </Button>
                             <Grid container justifyContent="flex-end">

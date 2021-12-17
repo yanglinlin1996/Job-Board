@@ -15,18 +15,21 @@ const NavBar = (props) => {
                 <Button variant="contained" className="navbarButton" style={STYLE} href="/">Home</Button>
                 <Button variant="contained" className="navbarButton" style={STYLE} href="/createJob">Create Job</Button>
                 <Button variant="contained" className="navbarButton" style={STYLE} href="/favorites">Favorites</Button>
-                <Button variant="contained" className="navbarButton" style={STYLE} onClick={ handleLogout } >Log Out</Button>
+                <Button variant="contained" className="navbarButton" style={STYLE} onClick={ handleLogout } href="/">Log Out</Button>
             </div>
             <div class="user">
-                <Avatar className="navbarButton" alt="image" >{ user }</Avatar>
+                <Avatar className="navbarButton" alt="image" style={STYLE}>{ user }</Avatar>
             </div>
         </div>
             :
-        <div class="navbar">
+        <div class="navbarBox">
+            <div class="navbar">
             <Button variant="contained" className="navbarButton" style={STYLE} href="/">Home</Button>
             <Button variant="contained" className="navbarButton" style={STYLE} href="/login">Log In</Button>
             <Button variant="contained" className="navbarButton" style={STYLE} href="/signUp">Sign Up</Button>
         </div>
+        </div>
+        
     )
 }
 

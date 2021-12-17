@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {STYLE} from '../constants.js';
 
 const theme = createTheme();
 
@@ -85,7 +86,7 @@ export default function LoginForm(props) {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                        >
+                            style={STYLE}>
                             Sign In
                         </Button>
                         <Link href="/signUp" variant="body2">

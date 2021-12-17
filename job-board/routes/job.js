@@ -129,9 +129,26 @@ router.delete("/delete", auth_middleware, (request, response) => {
         return response.status(404).send("Job post not found. Fail to delete.");
       } else {
         return JobAccessor.deleteJobById(id)
-          .then((jobResponse) =>
-            response.status(200).send("Job deleted successfully!")
-          )
+          .then((jobResponse) => {
+            UserModel.findUserByUsername(request.username)
+              .then((userResponse) => {
+                const favorites = userResponse[0].favorites;
+                if (favorites.find((job) => job.id === id)) {
+                  UserModel.deleteJobFromFavoritesById(request.username, id)
+                    .then((userResponse) =>
+                      response.status(200).send("removed")
+                    )
+                    .catch((error) =>
+                      request
+                        .status(404)
+                        .send("Fail to remove job favorites list.")
+                    );
+                }
+              })
+              .catch((error) =>
+                console.error(`Something went wrong: ${error}`)
+              );
+          })
           .catch((error) => response.status(400).send("Fail to delete job."));
       }
     })

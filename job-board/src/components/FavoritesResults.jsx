@@ -19,7 +19,6 @@ const Favorites = (props) => {
                         <Card sx={{ maxWidth: 345 }} className="card">
                         <CardHeader 
                             title={job.title}
-                            // subheader={job.postingDate}
                         />
                         <CardContent>
                             <Typography variant="body2" color="text.secondary">

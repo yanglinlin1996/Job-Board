@@ -59,9 +59,9 @@ const SearchResults = () => {
 
     if (onSearchPage && jobResults.length === 0) {
       return (
-        <div>
+        <div class="content">
           <div>
-            "No Job Found"
+            <h2>"No Job Found"</h2>
           </div>
           <button class="button" onClick={() => navigate(-1)}>Back</button>
         </div>

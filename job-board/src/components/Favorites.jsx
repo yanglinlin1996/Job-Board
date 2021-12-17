@@ -13,9 +13,9 @@ const Favorites = () => {
     useEffect(findAllFavorites, []);
 
     return (
-        <div>
+        <div class="content">
             <div className='titleContainer'>
-                Your Favorite Job List:
+                <h3>Your Favorite Job List:</h3>
             </div>
             <FavoritesResults favoriteJobs={favorites}></FavoritesResults>
             
