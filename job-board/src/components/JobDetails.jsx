@@ -10,7 +10,20 @@ import '../styles/JobDetails.css';
 const JobDetails = (props) => {
     const { user } = props;
     const { jobId } = useParams();
-    console.log("jobId: " + jobId);
+
+    const [job, setJob] = useState({});
+    const [favorites, setFavorites] = useState([]);
+    
+    let defaultColor = "grey";
+    for (const fav of favorites) {
+        if (fav.id === jobId) {
+            defaultColor = "red";
+        }
+    }
+    console.log("default color is: ", defaultColor);
+
+    const [favColor, setFavColor] = useState(defaultColor);
+
     function findJobDetails() {
         if (jobId) {
             console.log(jobId);
@@ -18,9 +31,19 @@ const JobDetails = (props) => {
         }
     }
 
-    const [job, setJob] = useState({});
-    const [favColor, setFavColor] = useState("grey");
-    useEffect(findJobDetails, [jobId, favColor]);
+    const findAllFavorites = () => {
+        axios.get("/api/user/getFavoriteJobsByUser")
+            .then(response => {
+                console.log("MY RESPONSE DATA:  ", response.data);
+                setFavorites(response.data);
+            })
+            .catch(error => console.log(error));
+        console.log("current user's favorite: ", favorites);
+    };
+    
+    useEffect(findAllFavorites, [favColor]);
+
+    useEffect(findJobDetails, [jobId]);
     
     const navigate = useNavigate();
 
@@ -47,6 +70,10 @@ const JobDetails = (props) => {
     }
 
     const handleFavoriteOnClick = () => {
+        if (!user) {
+            navigate("/login");
+        }
+
         console.log("You clicked favorite icon!");
 
         const opt = {
@@ -61,8 +88,13 @@ const JobDetails = (props) => {
         axios(opt)
             .then(response => { 
                 if (response.status === 200) {
-                    console.log("Successfully add to favorite: ", response);
-                    setFavColor("red");
+                    if (response.data === "added") {
+                        console.log("Successfully add to favorite: ", response);
+                        setFavColor("red");
+                    } else if (response.data === "removed") {
+                        console.log("Successfully deleted from favorite: ", response);
+                        setFavColor("grey");
+                    }
                 }
             })
             .catch(error => console.log("Add to favorite failed: ", error.message));

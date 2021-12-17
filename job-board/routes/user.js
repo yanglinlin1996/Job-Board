@@ -130,7 +130,7 @@ router.put("/addFavoriteJob", auth_middleware, (request, response) => {
           .then((userResponse) =>
             response
               .status(200)
-              .send("Job removed from favorites list successfully!")
+              .send("removed")
           )
           .catch((error) =>
             request.status(404).send("Fail to remove job favorites list.")
@@ -142,7 +142,7 @@ router.put("/addFavoriteJob", auth_middleware, (request, response) => {
               .then((userResponse) => {
                 response
                   .status(200)
-                  .send("Job added to Favorites list successfully!");
+                  .send("added");
               })
               .catch((error) =>
                 request.status(404).send("Fail to add job to favorites list.")
