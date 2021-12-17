@@ -11,7 +11,7 @@ const NavBar = (props) => {
         user
             ?
         <div class="navbarBox">
-            <div class="navbar">
+            <div class="navbar-1">
                 <Button variant="contained" className="navbarButton" style={STYLE} href="/">Home</Button>
                 <Button variant="contained" className="navbarButton" style={STYLE} href="/createJob">Create Job</Button>
                 <Button variant="contained" className="navbarButton" style={STYLE} href="/favorites">Favorites</Button>
@@ -23,7 +23,7 @@ const NavBar = (props) => {
         </div>
             :
         <div class="navbarBox">
-            <div class="navbar">
+            <div class="navbar-2">
             <Button variant="contained" className="navbarButton" style={STYLE} href="/">Home</Button>
             <Button variant="contained" className="navbarButton" style={STYLE} href="/login">Log In</Button>
             <Button variant="contained" className="navbarButton" style={STYLE} href="/signUp">Sign Up</Button>

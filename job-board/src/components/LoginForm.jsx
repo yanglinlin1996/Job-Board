@@ -36,7 +36,7 @@ export default function LoginForm(props) {
             .then(response => { 
                 if (response.status === 200) {
                     handleLoggedIn(response.data);
-                    navigate('/');
+                    navigate(-1);
                 }
             })
             .catch(error => {
