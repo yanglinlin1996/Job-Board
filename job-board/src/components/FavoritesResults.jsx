@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -19,7 +19,7 @@ const Favorites = (props) => {
                         <Card sx={{ maxWidth: 345 }} className="card">
                         <CardHeader 
                             title={job.title}
-                            subheader={job.postingDate}
+                            // subheader={job.postingDate}
                         />
                         <CardContent>
                             <Typography variant="body2" color="text.secondary">
@@ -38,7 +38,7 @@ const Favorites = (props) => {
     }
 
     return (
-        <div>{favoriteJobs}</div>
+        <div class="content">{favoriteJobs}</div>
     )
 }
 

@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import '../styles/JobDetails.css';
+import '../index.css';
 
 const JobDetails = (props) => {
     const { user } = props;
@@ -118,10 +119,6 @@ const JobDetails = (props) => {
                     <h4>{job.companyName}</h4>
                     {job.location}
                 </div>
-                {/* <div className='jobDetail'>
-                    Location: {job.location}
-                    <h5>{job.location}</h5>
-                </div> */}
                 <div className='jobDetail'>
                     <h4>Description: </h4>
                     {job.description}
@@ -131,35 +128,27 @@ const JobDetails = (props) => {
                     {job.employerEmailContact}
                     <h4 href={job.companyWebsite ? job.companyWebsite : ""}>{job.companyWebsite ? job.companyWebsite : ""}</h4>
                 </div>
-                <div className='iconBox'>
-                    <div className='otherIcons'>
+                <div>
                         {
                             user === job.creator 
                                 ?
-                            <div>
-                                <Link to="/updateJob" state={job}><EditIcon/></Link>
-                                <DeleteIcon onClick={handleDeleteOnClick}/>
+                            <div className='iconBox'>
+                                <div className='otherIcons'><Link to="/updateJob" state={job}><EditIcon/></Link></div>
+                                <DeleteIcon className='otherIcons' onClick={handleDeleteOnClick}/>
                             </div>
                                 :
                             null
                         }
-                    </div>
                 </div>
-                {/* <div className='jobDetail'>
-                    <h4 href={job.companyWebsite ? job.companyWebsite : ""}>{job.companyWebsite ? job.companyWebsite : ""}</h4>
-                </div> */}
-                {/* <div className='jobDetail'>
-                    Posted Date: {new Date(job.postingDate).toDateString()}
-                </div> */}
             </div>
             
         </div>
             :
         <div className='jobDetail'> No Job Found </div>;
     return (
-        <div>
+        <div class="content">
             <div>{jobComponent}</div>
-            <button onClick={() => navigate(-1)}>Back</button>
+            <button class="button" onClick={() => navigate(-1)}>Back</button>
         </div>
         
     )

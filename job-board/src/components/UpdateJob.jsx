@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import {
@@ -13,6 +13,8 @@ import {
     Typography,
     Button
   } from '@material-ui/core';
+import '../index.css';
+import {STYLE} from '../constants.js';
   
   const UpdateJob = (props) => {
     const location = useLocation();
@@ -41,15 +43,6 @@ import {
     });
     const navigate = useNavigate();
     const onSubmit = data => {
-        // const jobData = {
-        //     title: data.jobtitle,
-        //     companyName: data.companyname,
-        //     location: data.location,
-        //     description: data.description,
-        //     employerEmailContact: data.email,
-        //     companyWebsite: data.website
-        // };
-
         console.log("JOB DATA: ", data);
 
         const opt = {
@@ -71,11 +64,12 @@ import {
     };
 
     return (
-      <Fragment>
+      <div class="content">
+      <Fragment className="content">
         <Paper>
           <Box px={3} py={2}>
             <Typography variant="h6" align="center" margin="dense">
-              Update Job
+              <h2>Update Job</h2>
             </Typography>
 
             <Grid container spacing={1}>
@@ -185,13 +179,14 @@ import {
               variant="contained"
               color="primary"
               onClick={handleSubmit(onSubmit)}
-            >
+              style={STYLE}>
               Submit
             </Button>
           </Box>
         </Box>
       </Paper>
     </Fragment>
+    </div>
   );
 };
 

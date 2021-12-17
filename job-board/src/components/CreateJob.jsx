@@ -1,7 +1,6 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -13,6 +12,7 @@ import {
     Typography,
     Button
   } from '@material-ui/core';
+  import { STYLE } from '../constants.js'; 
   
   const CreateJob = () => {
     
@@ -37,16 +37,7 @@ import {
     } = useForm({ resolver: yupResolver(validationSchema)});
 
     const navigate = useNavigate();
-    const [job, setJob] = useState({});
     const onSubmit = data => {
-        // const jobData = {
-        //     title: data.jobtitle,
-        //     companyName: data.companyname,
-        //     location: data.location,
-        //     description: data.description,
-        //     employerEmailContact: data.email,
-        //     companyWebsite: data.website
-        // };
 
         console.log("JOB DATA: ", data);
 
@@ -70,14 +61,13 @@ import {
             .catch(() => navigate('/'));
     };
 
-    console.log("job: " + job);
-
     return (
+      <div class="content">
       <Fragment>
         <Paper>
           <Box px={3} py={2}>
             <Typography variant="h6" align="center" margin="dense">
-              Create A New Job
+              <h2>Create A New Job</h2>
             </Typography>
 
             <Grid container spacing={1}>
@@ -177,17 +167,11 @@ import {
           </Grid>
 
           <Box mt={3}>
-            {/* <Link to="/jobDetails" state={job}>
-              <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit(onSubmit)}>
-              Submit
-            </Button></Link> */}
             <Button
               variant="contained"
               color="primary"
-              onClick={handleSubmit(onSubmit)}>
+              onClick={handleSubmit(onSubmit)}
+              style={STYLE}>
               Submit
             </Button>
             
@@ -195,6 +179,7 @@ import {
         </Box>
       </Paper>
     </Fragment>
+    </div>
   );
 };
 

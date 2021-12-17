@@ -6,6 +6,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import '../styles/ResultCards.css';
+import '../index.css';
 
 const SearchResults = () => {
     const { searchWord } = useParams();
@@ -35,10 +36,10 @@ const SearchResults = () => {
         const job = jobResults[i];
         jobCardsComponent.push(
           <Link to={`/jobDetails/${job.id}`}>
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ maxWidth: 345 }} className="card">
             <CardHeader 
               title={job.title}
-              subheader={job.postingDate}
+              // subheader={job.postingDate}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
@@ -62,15 +63,15 @@ const SearchResults = () => {
           <div>
             "No Job Found"
           </div>
-          <button onClick={() => navigate(-1)}>Back</button>
+          <button class="button" onClick={() => navigate(-1)}>Back</button>
         </div>
       )
     }
 
     return (
-      <div>
+      <div class="content">
         {jobCardsComponent}
-        {jobResults.length ? <button onClick={() => navigate(-1)}>Back</button> : null}
+        {jobResults.length ? <button class="button" onClick={() => navigate(-1)}>Back</button> : null}
       </div>
     )
 }

@@ -2,6 +2,7 @@ const express = require("express");
 const auth_middleware = require("./auth_middleware");
 const router = express.Router();
 const JobAccessor = require("./models/Job.Model");
+const UserModel = require("./models/User.Model");
 const { v4: uuid } = require("uuid");
 
 // Returns all known Jobs

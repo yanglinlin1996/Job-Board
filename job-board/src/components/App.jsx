@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
 import MainContent from './MainContent';
-import { TOKEN_KEY } from '../ constants';
-import { useNavigate } from 'react-router';
+import { TOKEN_KEY } from '../constants';
 
 const App = () => {
     const curToken = localStorage.getItem(TOKEN_KEY);

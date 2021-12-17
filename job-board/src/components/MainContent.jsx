@@ -26,7 +26,6 @@ const MainContent = (props) => {
                     <Route exact path="/updateJob" element={<UpdateJob />} />
                     <Route exact path="/favorites" element={<Favorites />} />
                     <Route exact path="/jobDetails/:jobId" element={<JobDetails user={user} />}/>
-                    {/* <Route render={() => <h1>Page not found!</h1>} /> */}
                 </Routes>
             </Router>
             
