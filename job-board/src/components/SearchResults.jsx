@@ -10,15 +10,21 @@ import '../styles/ResultCards.css';
 const SearchResults = () => {
     const { searchWord } = useParams();
     const [jobResults, setJobResults] = useState([]);
+    const navigate = useNavigate();
+    const [onSearchPage, setOnSearchPage] = useState(false);
     
     function findSearchResults() {
       if (searchWord) {
-        axios.get(`/api/job/jobSearchByTitle/${searchWord}` ).then(response => {setJobResults(response.data)}).catch(error => console.log(error));
+        axios.get(`/api/job/jobSearchByTitle/${searchWord}` )
+          .then(response => {
+            setJobResults(response.data);
+            setOnSearchPage(true);
+          })
+          .catch(error => console.log(error));
       }
     }
 
-    useEffect(findSearchResults, [searchWord]);
-    const navigate = useNavigate();
+    useEffect(findSearchResults, [searchWord, onSearchPage]);
     
     console.log("Search job results are: ", jobResults);
     
@@ -29,8 +35,7 @@ const SearchResults = () => {
         const job = jobResults[i];
         jobCardsComponent.push(
           <Link to={`/jobDetails/${job.id}`}>
-          {/* onClick={navigate(`/jobDetails/${job.id}`)} */}
-          <Card sx={{ maxWidth: 345 }} className="card">
+          <Card sx={{ maxWidth: 345 }}>
             <CardHeader 
               title={job.title}
               subheader={job.postingDate}
@@ -49,20 +54,24 @@ const SearchResults = () => {
           
         )
       }
-      jobCardsComponent.push(<button onClick={() => navigate(-1)}>Back</button>);
+    } 
+
+    if (onSearchPage && jobResults.length === 0) {
+      return (
+        <div>
+          <div>
+            "No Job Found"
+          </div>
+          <button onClick={() => navigate(-1)}>Back</button>
+        </div>
+      )
     }
-    
+
     return (
       <div>
-        {/* <div>{jobCardsComponent.length ? jobCardsComponent : "No Job Found"}</div> */}
-        {/* {jobCardsComponent} */}
-        <div>
-          {jobCardsComponent.length ? <div>{jobCardsComponent}</div> : <div>No job Found</div>}
-        </div>
-        
+        {jobCardsComponent}
+        {jobResults.length ? <button onClick={() => navigate(-1)}>Back</button> : null}
       </div>
-      
-
     )
 }
 
