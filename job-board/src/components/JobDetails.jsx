@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -93,7 +94,7 @@ const JobDetails = () => {
                 </div>
             </div>
             <div className='icons'>
-                <EditIcon onClick={handleEditOnClick}/>
+                <Link to="/updateJob" state={job}><EditIcon/></Link>
                 <DeleteIcon onClick={handleDeleteOnClick}/>
                 <FavoriteIcon onClick={handleFavoriteOnClick}/>
             </div>

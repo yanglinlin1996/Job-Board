@@ -4,6 +4,7 @@ import Home from './Home';
 import LoginForm from './LoginForm';
 import SignUp from './SignUpForm';
 import CreateJob from './CreateJob';
+import UpdateJob from './UpdateJob';
 import Favorites from './Favorites';
 import JobDetails from './JobDetails';
 
@@ -18,6 +19,7 @@ const MainContent = (props) => {
                     <Route path="/login" element={<LoginForm handleLoggedIn={ handleLoggedIn } />} />
                     <Route path="/signUp" element={<SignUp />} />
                     <Route path="/createJob" element={<CreateJob />} />
+                    <Route path="/updateJob" element={<UpdateJob />} />
                     <Route path="/favorites" element={<Favorites />} />
                     <Route path="/jobDetails" element={<JobDetails />}/>
                 </Routes>
