@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
+import '../styles/ResultCards.css';
 
 const SearchResults = () => {
-    //const { jobResults } = props;
     const { searchWord } = useParams();
     const [jobResults, setJobResults] = useState([]);
     
@@ -19,6 +18,7 @@ const SearchResults = () => {
     }
 
     useEffect(findSearchResults, [searchWord]);
+    const navigate = useNavigate();
     
     console.log("Search job results are: ", jobResults);
     
@@ -30,7 +30,7 @@ const SearchResults = () => {
         jobCardsComponent.push(
           <Link to={`/jobDetails/${job.id}`}>
           {/* onClick={navigate(`/jobDetails/${job.id}`)} */}
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ maxWidth: 345 }} className="card">
             <CardHeader 
               title={job.title}
               subheader={job.postingDate}
@@ -45,12 +45,24 @@ const SearchResults = () => {
             </CardContent>
           </Card>
           </Link>
+          
+          
         )
       }
+      jobCardsComponent.push(<button onClick={() => navigate(-1)}>Back</button>);
     }
     
     return (
-      <div>{jobCardsComponent}</div>
+      <div>
+        {/* <div>{jobCardsComponent.length ? jobCardsComponent : "No Job Found"}</div> */}
+        {/* {jobCardsComponent} */}
+        <div>
+          {jobCardsComponent.length ? <div>{jobCardsComponent}</div> : <div>No job Found</div>}
+        </div>
+        
+      </div>
+      
+
     )
 }
 

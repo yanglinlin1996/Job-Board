@@ -11,6 +11,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
 import SearchResults from './SearchResults';
+import '../styles/Home.css';
 
 const Home = () => {
     const [jobResults, setJobResults] = useState([]);
@@ -18,14 +19,14 @@ const Home = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        navigate(`/${data.get("searchWord")}`);
+        navigate(`/search/${data.get("searchWord")}`);
         // axios.get("/api/job/jobSearchByTitle/" + data.get("searchWord")).then(response => {setJobResults(response.data)}).catch(error => console.log(error));
     };
     
     return (
-        <div>
-            <div className='titleContainer'>
-                Welcome To Job Search Board
+        <div class="mainContent">
+            <div class='titleContainer'>
+                <h1>Welcome To Job Search Board</h1>
             </div>
             <Box component="form" noValidate className='searchBox' onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <FormControl sx={{ width: '50ch' }}>

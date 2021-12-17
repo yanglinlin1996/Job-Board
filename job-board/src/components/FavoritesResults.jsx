@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material';
+import '../styles/ResultCards.css';
 
 const Favorites = (props) => {
     const favorites = props.favoriteJobs;
@@ -15,7 +16,7 @@ const Favorites = (props) => {
             if (job) {
                 favoriteJobs.push(
                     <Link to={`/jobDetails/${job.id}`}>
-                        <Card sx={{ maxWidth: 345 }}>
+                        <Card sx={{ maxWidth: 345 }} className="card">
                         <CardHeader 
                             title={job.title}
                             subheader={job.postingDate}

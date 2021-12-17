@@ -1,12 +1,45 @@
 .jobContainer {
   border: 1px solid pink;
-  margin: 2em 1em 1em 1em;
+  /* margin: 2em 1em 1em 1em; */
   display: flex;
+  flex-direction: column;
 }
 
 .jobDetail {
-  height: 150px;
   width: 600px;
-  border: 1px solid grey;
-  margin-right: 2em;
+  /* border: 1px solid grey; */
+  margin-left: 1em;
+  margin-bottom: 0.8em;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.favIcon {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+  margin-top: 1em;
+  color: grey;
+}
+
+.otherIcons {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.iconBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.favIcon:hover {
+  color: red;
 }

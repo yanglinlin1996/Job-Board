@@ -117,8 +117,8 @@ router.put("/updateJob/:id", auth_middleware, (request, response) => {
 });
 
 // Delete job with the job id
-router.delete("/delete/:id", auth_middleware, (request, response) => {
-  const id = request.params.id;
+router.delete("/delete", auth_middleware, (request, response) => {
+  const id = request.query.id;
   console.log("Job id in delete api is: ", id);
 
   // Check if job existed matching the job id

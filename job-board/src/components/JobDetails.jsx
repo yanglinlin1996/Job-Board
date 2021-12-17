@@ -19,7 +19,8 @@ const JobDetails = (props) => {
     }
 
     const [job, setJob] = useState({});
-    useEffect(findJobDetails, [jobId]);
+    const [favColor, setFavColor] = useState("grey");
+    useEffect(findJobDetails, [jobId, favColor]);
     
     const navigate = useNavigate();
 
@@ -39,6 +40,7 @@ const JobDetails = (props) => {
             .then(response => { 
                 if (response.status === 200) {
                     console.log("Successfully deleted the job: ", response);
+                    navigate(-1);
                 }
             })
             .catch(error => console.log("Delete job failed: ", error.message));
@@ -60,6 +62,7 @@ const JobDetails = (props) => {
             .then(response => { 
                 if (response.status === 200) {
                     console.log("Successfully add to favorite: ", response);
+                    setFavColor("red");
                 }
             })
             .catch(error => console.log("Add to favorite failed: ", error.message));
@@ -69,42 +72,55 @@ const JobDetails = (props) => {
         job 
             ? 
         <div className='jobContainer'>
+            <div className="titleBox">
+                <h2 className="jobDetail">Job details</h2>
+                <div className="favIcon" style={{color: favColor}}><FavoriteIcon onClick={handleFavoriteOnClick}/></div>
+            </div>
+            
             <div>
                 <div className='jobDetail'>
-                    Job Title: {job.title}
+                    <h3>{job.title}</h3>
+                    Posted Date: {new Date(job.postingDate).toDateString()}
                 </div>
                 <div className='jobDetail'> 
-                    Company Name: {job.companyName}
+                    <h4>{job.companyName}</h4>
+                    {job.location}
                 </div>
-                <div className='jobDetail'>
+                {/* <div className='jobDetail'>
                     Location: {job.location}
+                    <h5>{job.location}</h5>
+                </div> */}
+                <div className='jobDetail'>
+                    <h4>Description: </h4>
+                    {job.description}
                 </div>
                 <div className='jobDetail'>
-                    Description: {job.description}
+                    <h4>Employer Email Contact: </h4>
+                    {job.employerEmailContact}
+                    <h4 href={job.companyWebsite ? job.companyWebsite : ""}>{job.companyWebsite ? job.companyWebsite : ""}</h4>
                 </div>
-                <div className='jobDetail'>
-                    Employer Email Contact: {job.employerEmailContact}
-                </div>
-                <div className='jobDetail'>
-                    Company Website: {job.companyWebsite ? job.companyWebsite : ""}
-                </div>
-                <div className='jobDetail'>
-                    Posted Date: {job.postingDate}
-                </div>
-            </div>
-            <div className='icons'>
-                {
-                    user === job.creator 
-                        ?
-                    <div>
-                        <Link to="/updateJob" state={job}><EditIcon/></Link>
-                        <DeleteIcon onClick={handleDeleteOnClick}/>
+                <div className='iconBox'>
+                    <div className='otherIcons'>
+                        {
+                            user === job.creator 
+                                ?
+                            <div>
+                                <Link to="/updateJob" state={job}><EditIcon/></Link>
+                                <DeleteIcon onClick={handleDeleteOnClick}/>
+                            </div>
+                                :
+                            null
+                        }
                     </div>
-                        :
-                    null
-                }
-                <FavoriteIcon onClick={handleFavoriteOnClick}/>
+                </div>
+                {/* <div className='jobDetail'>
+                    <h4 href={job.companyWebsite ? job.companyWebsite : ""}>{job.companyWebsite ? job.companyWebsite : ""}</h4>
+                </div> */}
+                {/* <div className='jobDetail'>
+                    Posted Date: {new Date(job.postingDate).toDateString()}
+                </div> */}
             </div>
+            
         </div>
             :
         <div className='jobDetail'> No Job Found </div>;
