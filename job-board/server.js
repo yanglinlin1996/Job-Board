@@ -10,7 +10,11 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 //Setup MongoDB Connection
-const mongoString = "mongodb://127.0.0.1:27017";
+// const mongoString = "mongodb://127.0.0.1:27017";
+// const mongoString =
+//   "mongodb+srv://linlin-yang:CS5610WebDev!@webdev.xxo0n.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const mongoString = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017";
+
 mongoose.connect(mongoString, { useNewUrlParser: true });
 
 const mongoDB = mongoose.connection;
@@ -50,10 +54,10 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-// app.listen(process.env.PORT || 8000, () => {
-//   console.log("Starting server");
-// });
-
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("Starting server");
 });
+
+// app.listen(8000, () => {
+//   console.log("Starting server");
+// });
