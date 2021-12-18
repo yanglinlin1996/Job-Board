@@ -42,7 +42,7 @@ const JobDetails = (props) => {
         console.log("current user's favorite: ", favorites);
     };
     
-    useEffect(findAllFavorites, [favColor]);
+    useEffect(findAllFavorites, [user]);
 
     useEffect(findJobDetails, [jobId]);
     
