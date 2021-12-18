@@ -3,10 +3,18 @@
   height: 6vh;
 }
 
-.navbar {
+.navbar-1 {
   display: flex;
   margin-left: 1vw;
   width: 45%;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.navbar-2 {
+  display: flex;
+  margin-left: 1vw;
+  width: 34%;
   justify-content: space-evenly;
   align-items: flex-start;
 }
