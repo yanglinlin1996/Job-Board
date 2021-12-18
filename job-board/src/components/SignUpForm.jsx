@@ -14,7 +14,8 @@ import {STYLE} from '../constants.js';
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp(props) {
+    const { handleLoggedIn } = props;
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -33,7 +34,11 @@ export default function SignUp() {
         };
 
         axios(opt).then(response => { 
-            navigate('/login')
+            // navigate('/login');
+            if (response.status === 200) {
+                handleLoggedIn(response.data);
+                navigate('/')
+            }
         })
             .catch(error => console.log(error));
     };

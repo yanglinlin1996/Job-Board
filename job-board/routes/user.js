@@ -85,7 +85,9 @@ router.post("/register", (request, response) => {
             "Error! You registered an existing username. Please try again!"
           );
       } else {
+        request.session.username = username;
         insertNewUser(request, username, password);
+        response.status(200).send(username);
       }
     })
     .catch((error) => response.send(error));
