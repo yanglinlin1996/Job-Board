@@ -12,7 +12,7 @@ exports.JobSchema = new Schema(
       type: String,
     },
     employerEmailContact: String,
-    companyWebsite: String, // optional
+    companyWebsite: String,
     creator: String,
     postingDate: Date,
   },

@@ -55,9 +55,8 @@ import {STYLE} from '../constants.js';
         axios(opt)
             .then(response => { 
                 if (response.status === 200) {
-                    console.log("Update job response is: ", response);
                     alert("Job updated successfully")
-                    navigate(`/jobDetails/${job.id}`);
+                    navigate(`/jobDetails/${job.id}/${0}`);
                 }
             })
             .catch(error => console.log("Create job failed: ", error.message));
@@ -71,7 +70,6 @@ import {STYLE} from '../constants.js';
             <Typography variant="h6" align="center" margin="dense">
               <h2>Update Job</h2>
             </Typography>
-
             <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -105,7 +103,6 @@ import {STYLE} from '../constants.js';
                 {errors.companyName?.message}
               </Typography>
             </Grid>
-            
             <Grid item xs={12} sm={12}>
               <TextField
                 required
@@ -158,7 +155,6 @@ import {STYLE} from '../constants.js';
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField
-                
                 id="companyWebsite"
                 name="companyWebsite"
                 label="Website (optional)"
@@ -173,7 +169,6 @@ import {STYLE} from '../constants.js';
               </Typography>
             </Grid>
           </Grid>
-
           <Box mt={3}>
             <Button
               variant="contained"

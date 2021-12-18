@@ -25,34 +25,43 @@ const SearchResults = () => {
       }
     }
 
+    const [favorites, setFavorites] = useState([]);
+    const findAllFavorites = () => {
+      axios.get("/api/user/getFavoriteJobsByUser").then(response => {setFavorites(response.data)}).catch(error => console.log(error));
+    };
+  
+    useEffect(findAllFavorites, []);
+
     useEffect(findSearchResults, [searchWord, onSearchPage]);
-    
-    console.log("Search job results are: ", jobResults);
     
     const jobCardsComponent = [];      
 
     if (jobResults) {
       for (let i = 0; i < jobResults.length; i++) {
+        let isFavorite = 0;
         const job = jobResults[i];
+        for (let fav of favorites) {
+          if (job.id === fav.id) {
+            isFavorite = 1;
+            break;
+          }
+        }
         jobCardsComponent.push(
-          <Link to={`/jobDetails/${job.id}`}>
-          <Card sx={{ maxWidth: 345 }} className="card">
-            <CardHeader 
-              title={job.title}
-              // subheader={job.postingDate}
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {job.companyName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {job.location}
-              </Typography>
-            </CardContent>
-          </Card>
+          <Link to={`/jobDetails/${job.id}/${isFavorite}`}>
+            <Card sx={{ maxWidth: 345 }} className="card">
+              <CardHeader 
+                title={job.title}
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {job.companyName}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {job.location}
+                </Typography>
+              </CardContent>
+            </Card>
           </Link>
-          
-          
         )
       }
     } 

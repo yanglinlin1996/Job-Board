@@ -9,34 +9,9 @@ router.get("/whoIsLoggedIn", auth_middleware, function (request, response) {
   return response.send(request.session);
 });
 
-// check who is logged in without midware auth
-router.get("/whoIsLoggedInButWithoutMiddleware", function (request, response) {
-  const username = request.session.username;
-
-  return response.send(username);
-});
-
-// Return user with requested username
-router.get("/getUser", (request, response) => {
-  const username = request.username;
-  if (!username) {
-    return response.status(422).send("Missing data");
-  }
-
-  return UserModel.findUserByUsername(username)
-    .then((userResponse) => {
-      if (!userResponse.length) {
-        response.status(404).send("User not found");
-      }
-      response.send(userResponse);
-    })
-    .catch((error) => response.status(500).send("Issue getting user"));
-});
-
 // User login
 router.post("/authenticate", (request, response) => {
   let { username, password } = request.body;
-  //password = JSON.stringify(password);
   if (!username || !password) {
     return response.status(422).send("Must include both password and username");
   }
@@ -129,11 +104,7 @@ router.put("/addFavoriteJob", auth_middleware, (request, response) => {
       const favorites = userResponse[0].favorites;
       if (favorites.find((job) => job.id === jobId)) {
         UserModel.deleteJobFromFavoritesById(username, jobId)
-          .then((userResponse) =>
-            response
-              .status(200)
-              .send("removed")
-          )
+          .then((userResponse) => response.status(200).send("removed"))
           .catch((error) =>
             request.status(404).send("Fail to remove job favorites list.")
           );
@@ -142,9 +113,7 @@ router.put("/addFavoriteJob", auth_middleware, (request, response) => {
           .then((jobResponse) => {
             UserModel.updateFavoritesById(username, jobResponse)
               .then((userResponse) => {
-                response
-                  .status(200)
-                  .send("added");
+                response.status(200).send("added");
               })
               .catch((error) =>
                 request.status(404).send("Fail to add job to favorites list.")

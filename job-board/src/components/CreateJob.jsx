@@ -49,9 +49,8 @@ import {
         axios(opt)
             .then(response => { 
                 if (response.status === 200) {
-                    console.log("Create job response is: ", response);
                     alert("Job created successfully");
-                    navigate(`/jobDetails/${response.data.id}`);
+                    navigate(`/jobDetails/${response.data.id}/${0}`);
                 }
             })
             .catch(() => navigate('/'));

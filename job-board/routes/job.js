@@ -5,16 +5,8 @@ const JobAccessor = require("./models/Job.Model");
 const UserModel = require("./models/User.Model");
 const { v4: uuid } = require("uuid");
 
-// Returns all known Jobs
-router.get("/findAll", (request, response) => {
-  return JobAccessor.getAllJobs()
-    .then((jobResponse) => response.status(200).send(jobResponse))
-    .catch((error) => response.status(400).send(error));
-});
-
 // Return Job by id
 router.get("/jobSearch/:id", (request, response) => {
-  console.log(request.params.id);
   return JobAccessor.findJobById(request.params.id)
     .then((jobResponse) => response.status(200).send(jobResponse))
     .catch((error) => response.status(400).send(error));
@@ -29,9 +21,7 @@ router.get("/jobSearchByTitle/:title", (request, response) => {
 
 // Create a job post
 router.post("/create", auth_middleware, (request, response) => {
-  console.log("entering create job......");
   const job = request.body;
-  console.log(JSON.stringify(job));
   if (
     !job.title ||
     !job.companyName ||
@@ -89,8 +79,6 @@ router.put("/updateJob/:id", auth_middleware, (request, response) => {
   const id = request.params.id;
   const job = request.body;
 
-  console.log("Update job id is: ", id);
-
   if (
     !job.title ||
     !job.companyName ||
@@ -122,7 +110,6 @@ router.put("/updateJob/:id", auth_middleware, (request, response) => {
 // Delete job with the job id
 router.delete("/delete", auth_middleware, (request, response) => {
   const id = request.query.id;
-  console.log("Job id in delete api is: ", id);
 
   // Check if job existed matching the job id
   JobAccessor.findJobById(id)

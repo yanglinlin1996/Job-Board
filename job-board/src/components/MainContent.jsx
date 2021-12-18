@@ -12,7 +12,6 @@ import '../styles/MainContent.css';
 
 const MainContent = (props) => {
     const { handleLoggedIn, user } = props;
-    console.log("user in main content is: ", user);
 
     return (
         <div class='mainContent'>
@@ -25,10 +24,9 @@ const MainContent = (props) => {
                     <Route exact path="/createJob" element={<CreateJob />} />
                     <Route exact path="/updateJob" element={<UpdateJob />} />
                     <Route exact path="/favorites" element={<Favorites />} />
-                    <Route exact path="/jobDetails/:jobId" element={<JobDetails user={user} />}/>
+                    <Route exact path="/jobDetails/:jobId/:isFavorite" element={<JobDetails user={user} />}/>
                 </Routes>
             </Router>
-            
         </div>
     )
 }

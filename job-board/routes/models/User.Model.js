@@ -7,19 +7,8 @@ function insertUser(user) {
   return UserModel.create(user);
 }
 
-function getAllUsers() {
-  return UserModel.find().exec();
-}
-
 function findUserByUsername(username) {
   return UserModel.find({ username: username }).exec();
-}
-
-function updatePasswordByUsername(username, password) {
-  return UserModel.updateOne(
-    { username: username },
-    { $set: { password: password } }
-  ).exec();
 }
 
 function updateFavoritesById(username, job) {
@@ -36,12 +25,9 @@ function deleteJobFromFavoritesById(username, jobId) {
   );
 }
 
-// Make sure to export a function after you create it!
 module.exports = {
   insertUser,
-  getAllUsers,
   findUserByUsername,
-  updatePasswordByUsername,
   updateFavoritesById,
   deleteJobFromFavoritesById,
 };

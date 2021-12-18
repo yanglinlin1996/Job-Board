@@ -15,7 +15,7 @@ const Favorites = (props) => {
             const job = favorites[i];
             if (job) {
                 favoriteJobs.push(
-                    <Link to={`/jobDetails/${job.id}`}>
+                    <Link to={`/jobDetails/${job.id}/${1}`}>
                         <Card sx={{ maxWidth: 345 }} className="card">
                         <CardHeader 
                             title={job.title}

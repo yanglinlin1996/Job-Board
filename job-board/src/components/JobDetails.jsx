@@ -12,46 +12,29 @@ import '../index.css';
 
 const JobDetails = (props) => {
     const { user } = props;
-    const { jobId } = useParams();
+    const { jobId, isFavorite } = useParams();
 
     const [job, setJob] = useState({});
-    const [favorites, setFavorites] = useState([]);
-    
+
     let defaultColor = "grey";
-    for (const fav of favorites) {
-        if (fav.id === jobId) {
-            defaultColor = "red";
-        }
+
+    if (isFavorite === "1") {
+        defaultColor = "pink";
     }
-    console.log("default color is: ", defaultColor);
 
     const [favColor, setFavColor] = useState(defaultColor);
 
     function findJobDetails() {
         if (jobId) {
-            console.log(jobId);
             axios.get(`/api/job/jobSearch/${jobId}`).then((response) => setJob(response.data[0])).catch((error) => console.log(error));
         }
     }
-
-    const findAllFavorites = () => {
-        axios.get("/api/user/getFavoriteJobsByUser")
-            .then(response => {
-                console.log("MY RESPONSE DATA:  ", response.data);
-                setFavorites(response.data);
-            })
-            .catch(error => console.log(error));
-        console.log("current user's favorite: ", favorites);
-    };
-    
-    useEffect(findAllFavorites, [user]);
 
     useEffect(findJobDetails, [jobId]);
     
     const navigate = useNavigate();
 
     const handleDeleteOnClick = () => {
-        console.log("You clicked delete icon!");
 
         const opt = {
             method: "DELETE",
@@ -65,7 +48,6 @@ const JobDetails = (props) => {
         axios(opt)
             .then(response => { 
                 if (response.status === 200) {
-                    console.log("Successfully deleted the job: ", response);
                     navigate(-1);
                 }
             })
@@ -76,8 +58,6 @@ const JobDetails = (props) => {
         if (!user) {
             navigate("/login");
         }
-
-        console.log("You clicked favorite icon!");
 
         const opt = {
             method: "PUT",
@@ -93,7 +73,7 @@ const JobDetails = (props) => {
                 if (response.status === 200) {
                     if (response.data === "added") {
                         console.log("Successfully add to favorite: ", response);
-                        setFavColor("red");
+                        setFavColor("pink");
                     } else if (response.data === "removed") {
                         console.log("Successfully deleted from favorite: ", response);
                         setFavColor("grey");
@@ -134,7 +114,7 @@ const JobDetails = (props) => {
                 </div>
                 <div className='jobDetail'>
                     {job.companyWebsite ? <h4>Company Website: </h4> : ""}
-                    {job.companyWebsite ? job.companyWebsite : ""}
+                    <div>{job.companyWebsite ? job.companyWebsite : ""}</div>
                 </div>
                 <div>
                         {

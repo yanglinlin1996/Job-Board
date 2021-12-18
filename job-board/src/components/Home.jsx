@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 import SearchResults from './SearchResults';
 import '../styles/Home.css';
-import {STYLE} from '../constants.js';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -35,7 +34,7 @@ const Home = () => {
                         label="What job are you looking for..." 
                     />
                 </FormControl>
-                <Button type="submit" variant="contained" style={STYLE}>Search</Button>
+                <Button type="submit" variant="contained" style={{backgroundColor: "rgb(235, 126, 83)", marginLeft: 5, marginTop: 6}}>Search</Button>
             </Box>
             <SearchResults />
         </div>
