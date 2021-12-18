@@ -43,3 +43,8 @@
 .otherIcons:hover {
   cursor: pointer;
 }
+
+.avatar {
+  margin: auto;
+  margin-left: 0.5em;
+}

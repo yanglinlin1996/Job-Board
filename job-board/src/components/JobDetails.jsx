@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import faker from 'faker';
+import Avatar from '@mui/material/Avatar';
 import '../styles/JobDetails.css';
 import '../index.css';
 
@@ -106,6 +108,9 @@ const JobDetails = (props) => {
             ? 
         <div className='jobContainer'>
             <div className="titleBox">
+                <div className="avatar">
+                    <Avatar alt="avatar" src={faker.image.animals()} />
+                </div>
                 <h2 className="jobDetail">Job details</h2>
                 <div className="favIcon" style={{color: favColor}}><FavoriteIcon onClick={handleFavoriteOnClick}/></div>
             </div>
