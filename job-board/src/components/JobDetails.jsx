@@ -125,7 +125,7 @@ const JobDetails = (props) => {
                 </div>
                 <div className='jobDetail'>
                     <h4>Employer Email Contact: </h4>
-                    {job.employerEmailContact}
+                    <a href={`mailto:${job.employerEmailContact}`}>Contact Us</a>
                 </div>
                 <div className='jobDetail'>
                     {job.companyWebsite ? <h4>Company Website: </h4> : ""}
