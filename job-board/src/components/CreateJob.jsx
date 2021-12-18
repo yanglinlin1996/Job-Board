@@ -37,10 +37,8 @@ import {
     } = useForm({ resolver: yupResolver(validationSchema)});
 
     const navigate = useNavigate();
+
     const onSubmit = data => {
-
-        console.log("JOB DATA: ", data);
-
         const opt = {
             method: "POST",
             url: "/api/job/create",
@@ -53,8 +51,6 @@ import {
                 if (response.status === 200) {
                     console.log("Create job response is: ", response);
                     alert("Job created successfully");
-                    
-                    //setJob(response.data);
                     navigate(`/jobDetails/${response.data.id}`);
                 }
             })

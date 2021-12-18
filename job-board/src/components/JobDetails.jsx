@@ -128,7 +128,7 @@ const JobDetails = (props) => {
                     {job.employerEmailContact}
                 </div>
                 <div className='jobDetail'>
-                    {job.companyWebsite ? <h4>Company Website</h4> : ""}
+                    {job.companyWebsite ? <h4>Company Website: </h4> : ""}
                     {job.companyWebsite ? job.companyWebsite : ""}
                 </div>
                 <div>

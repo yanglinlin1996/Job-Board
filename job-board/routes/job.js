@@ -89,6 +89,8 @@ router.put("/updateJob/:id", auth_middleware, (request, response) => {
   const id = request.params.id;
   const job = request.body;
 
+  console.log("Update job id is: ", id);
+
   if (
     !job.title ||
     !job.companyName ||

@@ -16,7 +16,7 @@ import {
 import '../index.css';
 import {STYLE} from '../constants.js';
   
-  const UpdateJob = (props) => {
+  const UpdateJob = () => {
     const location = useLocation();
     const job = location.state;
     
@@ -41,13 +41,13 @@ import {STYLE} from '../constants.js';
       } = useForm({
         resolver: yupResolver(validationSchema)
     });
-    const navigate = useNavigate();
-    const onSubmit = data => {
-        console.log("JOB DATA: ", data);
 
+    const navigate = useNavigate();
+
+    const onSubmit = data => {
         const opt = {
-            method: "POST",
-            url: "/api/job/create",
+            method: "PUT",
+            url: `/api/job/updateJob/${job.id}`,
             data: data,
             headers: { "content-type": "application/json" },
         };
@@ -57,7 +57,7 @@ import {STYLE} from '../constants.js';
                 if (response.status === 200) {
                     console.log("Update job response is: ", response);
                     alert("Job updated successfully")
-                    navigate(`/jobDetails/${response.data.id}`);
+                    navigate(`/jobDetails/${job.id}`);
                 }
             })
             .catch(error => console.log("Create job failed: ", error.message));
